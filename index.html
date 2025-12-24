@@ -12,6 +12,7 @@
   --bg1:#050414;
   --bg2:#120a2a;
   --panel:rgba(14,10,31,.72);
+  --panel2:rgba(14,10,31,.55);
   --stroke:rgba(255,255,255,.12);
   --text:#f1f5f9;
   --muted:rgba(241,245,249,.65);
@@ -22,221 +23,675 @@
   --radius:20px;
 }
 *{box-sizing:border-box}
+html,body{height:100%}
 body{
   margin:0;
-  font-family:'Cairo',Tahoma;
+  font-family:'Cairo',Tahoma,Arial,sans-serif;
   background:
     radial-gradient(900px 500px at 10% 10%, rgba(181,92,255,.25), transparent 60%),
     radial-gradient(900px 500px at 90% 20%, rgba(124,58,237,.20), transparent 60%),
     linear-gradient(135deg,var(--bg1),var(--bg2));
   color:var(--text);
+  overflow-x:hidden;
+}
+
+/* subtle stars */
+.stars{
+  position:fixed; inset:0; pointer-events:none; opacity:.28;
+  background-image:
+    radial-gradient(2px 2px at 20px 30px, rgba(255,255,255,.30), transparent 55%),
+    radial-gradient(1px 1px at 180px 120px, rgba(255,255,255,.22), transparent 60%),
+    radial-gradient(1px 1px at 380px 260px, rgba(255,255,255,.18), transparent 60%),
+    radial-gradient(2px 2px at 70% 20%, rgba(255,255,255,.20), transparent 55%),
+    radial-gradient(1px 1px at 85% 65%, rgba(255,255,255,.16), transparent 60%);
+  background-size:420px 320px;
+  filter: blur(.2px);
+}
+
+/* container */
+.wrap{
+  max-width:1200px;
+  margin:0 auto;
+  padding:18px 18px 86px;
 }
 
 /* ===== TOP BAR ===== */
 .topbar{
-  position:sticky;top:0;z-index:10;
-  display:flex;justify-content:space-between;align-items:center;
-  padding:14px 18px;
-  background:rgba(10,8,25,.75);
-  backdrop-filter:blur(10px);
-  border-bottom:1px solid var(--stroke);
+  position:sticky; top:0; z-index:20;
+  display:flex; justify-content:space-between; align-items:center;
+  gap:12px;
+  padding:12px 14px;
+  background:rgba(10,8,25,.78);
+  backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,.10);
+  border-radius:18px;
+  box-shadow:0 18px 50px rgba(0,0,0,.45);
 }
-.brand{display:flex;align-items:center;gap:12px}
+.brand{
+  display:flex; align-items:center; gap:12px;
+  min-width: 260px;
+}
 .logo{
-  width:44px;height:44px;border-radius:14px;
+  width:44px; height:44px; border-radius:14px;
   background:linear-gradient(135deg,var(--mauve),var(--mauve2));
-  display:grid;place-items:center;font-weight:900;
+  display:grid; place-items:center;
+  font-weight:900;
+  box-shadow:0 12px 30px rgba(124,58,237,.35);
+  flex:0 0 auto;
 }
 .brand b{font-size:15px}
-.brand span{display:block;font-size:12px;color:var(--muted)}
+.brand span{display:block; font-size:12px; color:var(--muted); margin-top:2px}
 
+/* actions */
+.right{
+  display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+}
+.actions{
+  display:flex; gap:8px; align-items:center; flex-wrap:wrap;
+}
 .actions a{
   text-decoration:none;
   color:#fff;
-  padding:8px 14px;
+  padding:8px 12px;
   border-radius:999px;
   background:rgba(255,255,255,.08);
-  border:1px solid var(--stroke);
+  border:1px solid rgba(255,255,255,.12);
   font-size:13px;
+  transition:.2s;
+  display:inline-flex; align-items:center; gap:8px;
+  user-select:none;
+}
+.actions a:hover{
+  transform:translateY(-2px);
+  border-color: rgba(181,92,255,.45);
+  background:rgba(255,255,255,.10);
+}
+.actions a.whatsapp{
+  border-color: rgba(34,197,94,.30);
+}
+.actions a.whatsapp:hover{
+  border-color: rgba(34,197,94,.55);
+}
+
+/* language switch */
+.lang{
+  display:flex; gap:6px; align-items:center;
+  padding:6px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.05);
+}
+.lang button{
+  border:0;
+  cursor:pointer;
+  color:rgba(241,245,249,.85);
+  background:transparent;
+  padding:7px 10px;
+  border-radius:999px;
+  font-family:inherit;
+  font-weight:800;
+  font-size:12px;
+  transition:.15s;
+}
+.lang button.active{
+  color:#fff;
+  background:linear-gradient(135deg,var(--mauve),var(--mauve2));
+  box-shadow:0 10px 25px rgba(124,58,237,.25);
 }
 
 /* ===== HERO ===== */
 .hero{
-  padding:28px 18px;
-  max-width:1200px;
-  margin:auto;
+  margin-top:16px;
+  border:1px solid rgba(255,255,255,.10);
+  background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  overflow:hidden;
+  position:relative;
+}
+.hero:before{
+  content:"";
+  position:absolute; inset:-2px;
+  background:
+    radial-gradient(600px 260px at 20% 30%, rgba(181,92,255,.22), transparent 62%),
+    radial-gradient(520px 240px at 80% 25%, rgba(124,58,237,.18), transparent 60%);
+  pointer-events:none;
+}
+.heroInner{
+  position:relative;
+  padding:22px 18px;
+  display:grid;
+  grid-template-columns: 1.2fr .8fr;
+  gap:16px;
+  align-items:center;
+}
+@media(max-width:900px){
+  .heroInner{grid-template-columns:1fr}
+}
+.kicker{
+  display:inline-flex; gap:10px; align-items:center;
+  padding:7px 12px;
+  border-radius:999px;
+  border:1px solid rgba(181,92,255,.35);
+  background: rgba(181,92,255,.12);
+  color:#e9d5ff;
+  font-size:13px;
+  width:fit-content;
 }
 .hero h1{
   font-size:34px;
-  margin:0 0 10px;
+  margin:12px 0 10px;
+  line-height:1.15;
 }
 .hero p{
   margin:0;
   color:var(--muted);
   line-height:1.9;
+  font-size:15px;
+}
+.cta{
+  display:flex; gap:10px; flex-wrap:wrap;
+  margin-top:14px;
+}
+.btn{
+  text-decoration:none;
+  color:#fff;
+  padding:10px 14px;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.06);
+  display:inline-flex; gap:10px; align-items:center;
+  transition:.2s;
+  font-weight:800;
+  font-size:13px;
+}
+.btn.primary{
+  border:0;
+  background:linear-gradient(135deg,var(--mauve),var(--mauve2));
+  box-shadow:0 14px 40px rgba(124,58,237,.28);
+}
+.btn:hover{transform:translateY(-2px); border-color:rgba(181,92,255,.45)}
+.statBox{
+  display:grid; gap:10px;
+}
+.stat{
+  padding:14px;
+  border-radius:18px;
+  border:1px solid rgba(255,255,255,.10);
+  background:rgba(0,0,0,.16);
+}
+.stat b{display:block; margin-bottom:6px}
+.stat span{color:var(--muted); font-size:13px; line-height:1.7}
+.bar{
+  height:10px; border-radius:999px;
+  background:rgba(255,255,255,.08);
+  overflow:hidden;
+  margin-top:10px;
+}
+.bar i{
+  display:block; height:100%; width:72%;
+  background:linear-gradient(135deg, rgba(181,92,255,.95), rgba(124,58,237,.55));
+  border-radius:999px;
+}
+
+/* ===== SECTION HEAD ===== */
+.sectionHead{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  gap:10px;
+  flex-wrap:wrap;
+  margin:18px 4px 12px;
+}
+.sectionHead h2{margin:0; font-size:20px}
+.sectionHead p{margin:4px 0 0; color:var(--muted); font-size:13px}
+.chip{
+  padding:7px 12px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.04);
+  color:#e9d5ff;
+  font-size:13px;
 }
 
 /* ===== MODULE GRID ===== */
 .grid{
-  max-width:1200px;
-  margin:0 auto 80px;
-  padding:0 18px;
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));
   gap:16px;
 }
 .card{
   background:var(--panel);
-  border:1px solid var(--stroke);
+  border:1px solid rgba(255,255,255,.12);
   border-radius:var(--radius);
-  box-shadow:var(--shadow);
-  padding:18px;
+  box-shadow:0 20px 60px rgba(0,0,0,.45);
+  overflow:hidden;
   transition:.25s;
+  position:relative;
+}
+.card:before{
+  content:"";
+  position:absolute; inset:-2px;
+  background:radial-gradient(520px 280px at var(--x,50%) var(--y,20%), rgba(181,92,255,.22), transparent 60%);
+  opacity:.65;
+  pointer-events:none;
 }
 .card:hover{
   transform:translateY(-6px);
   border-color:rgba(181,92,255,.45);
 }
-.card h3{margin:0 0 6px;font-size:18px}
-.card p{margin:0;color:var(--muted);font-size:13px;line-height:1.7}
-.card a{
-  display:inline-block;
+.cardInner{position:relative; padding:16px}
+.thumb{
+  height:150px;
+  border-radius:16px;
+  border:1px solid rgba(255,255,255,.10);
+  background:rgba(0,0,0,.18);
+  display:flex; align-items:center; justify-content:center;
+  overflow:hidden;
+}
+.thumb img{
+  width:100%; height:100%;
+  object-fit:cover;
+  display:block;
+  filter:saturate(1.04) contrast(1.02);
+}
+.meta{
+  display:flex; justify-content:space-between; align-items:flex-start;
+  gap:10px;
+  margin-top:12px;
+}
+.meta h3{margin:0 0 6px; font-size:18px}
+.meta p{margin:0; color:var(--muted); font-size:13px; line-height:1.7}
+.icon{
+  width:42px;height:42px;border-radius:16px;
+  display:grid;place-items:center;
+  border:1px solid rgba(181,92,255,.28);
+  background:rgba(181,92,255,.10);
+  flex:0 0 auto;
+}
+.card a.go{
+  display:inline-flex; align-items:center; gap:10px;
   margin-top:12px;
   text-decoration:none;
-  padding:8px 14px;
+  padding:9px 12px;
   border-radius:12px;
   background:linear-gradient(135deg,var(--mauve),var(--mauve2));
   color:#fff;
   font-size:13px;
+  font-weight:800;
+  transition:.2s;
+}
+.card a.go:hover{transform:translateY(-2px)}
+.bad{
+  display:inline-flex; align-items:center; gap:8px;
+  margin-top:10px;
+  padding:6px 10px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.10);
+  background:rgba(0,0,0,.16);
+  font-size:12px;
+  color:rgba(241,245,249,.90);
+}
+.bad i{
+  width:9px;height:9px;border-radius:999px;
+  background:var(--mauve);
+  box-shadow:0 0 18px rgba(181,92,255,.65);
+  display:inline-block;
+}
+
+/* ===== FOOTER ===== */
+.footer{
+  margin-top:18px;
+  padding:18px;
+  text-align:center;
+  color:var(--muted);
+  border-top:1px solid rgba(255,255,255,.08);
 }
 
 /* ===== BOTTOM NAV (MOBILE) ===== */
 .bottom-nav{
   position:fixed;
-  bottom:0;left:0;right:0;
+  bottom:12px; left:12px; right:12px;
   display:none;
-  background:rgba(12,10,28,.9);
-  backdrop-filter:blur(10px);
-  border-top:1px solid var(--stroke);
+  background:rgba(12,10,28,.92);
+  backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:18px;
+  box-shadow:0 18px 60px rgba(0,0,0,.55);
   padding:8px 6px;
+  gap:6px;
+  z-index:25;
 }
 .bottom-nav a{
   flex:1;
   text-align:center;
   text-decoration:none;
-  color:var(--muted);
-  font-size:12px;
+  color:rgba(241,245,249,.70);
+  font-size:11.5px;
+  padding:8px 6px;
+  border-radius:14px;
+  transition:.2s;
 }
 .bottom-nav a span{
   display:block;
-  font-size:20px;
+  font-size:18px;
   margin-bottom:2px;
 }
-.bottom-nav a.active{color:#fff}
+.bottom-nav a.active{
+  color:#fff;
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.10);
+}
 
-/* ===== RESPONSIVE ===== */
+/* blocks */
+.fr{direction:ltr; text-align:left; font-family:Segoe UI, Tahoma, Arial, sans-serif}
+.hide{display:none!important}
+
+/* responsive */
 @media(max-width:720px){
+  .wrap{padding-bottom:120px}
   .hero h1{font-size:26px}
   .actions{display:none}
   .bottom-nav{display:flex}
+  .brand{min-width:auto}
 }
 </style>
 </head>
 
 <body>
+<div class="stars"></div>
 
-<!-- TOP -->
-<div class="topbar">
-  <div class="brand">
-    <div class="logo">BM</div>
-    <div>
-      <b>BM Soft • ProBMS</b>
-      <span>استعراض سريع لوظائف البرنامج</span>
+<div class="wrap">
+
+  <!-- TOP -->
+  <div class="topbar">
+    <div class="brand">
+      <div class="logo">BM</div>
+      <div>
+        <b>BM Soft • ProBMS</b>
+        <span class="arBlock">استعراض سريع لوظائف البرنامج</span>
+        <span class="fr frBlock hide">Aperçu rapide des fonctions du logiciel</span>
+      </div>
+    </div>
+
+    <div class="right">
+      <div class="lang" aria-label="Language">
+        <button id="btnAR" class="active" type="button">AR</button>
+        <button id="btnFR" type="button">FR</button>
+      </div>
+
+      <div class="actions">
+        <a class="whatsapp" href="https://wa.me/213662541486" target="_blank" rel="noopener">
+          💬 <span class="arBlock">واتساب</span><span class="fr frBlock hide">WhatsApp</span>
+        </a>
+
+        <a href="https://www.bmsoftdev.com" target="_blank" rel="noopener">
+          🌐 <span class="arBlock">الموقع</span><span class="fr frBlock hide">Site</span>
+        </a>
+      </div>
     </div>
   </div>
-  
-  
-  <div class="actions">
-  <a class="whatsapp" 
-     href="https://wa.me/213662541486" 
-     target="_blank" 
-     title="تواصل عبر واتساب">
-     💬 واتساب
-  </a>
 
-  <a href="https://www.bmsoftdev.com" 
-     target="_blank" 
-     title="الموقع الرسمي">
-     🌐 الموقع
-  </a>
-</div>
+  <!-- HERO -->
+  <div class="hero">
+    <div class="heroInner">
+      <div>
+        <span class="kicker arBlock">✨ لوحة تحكم الوحدات • ProBMS</span>
+        <span class="kicker fr frBlock hide">✨ Tableau de bord des modules • ProBMS</span>
 
+        <h1 class="arBlock">📊 تقديم برنامج ProBMS</h1>
+        <h1 class="fr frBlock hide">📊 Présentation du logiciel ProBMS</h1>
 
+        <p class="arBlock">
+          نظام ذكي لتسيير المخزون، المبيعات، المشتريات والأرباح.<br>
+          واجهة حديثة • استعمال سريع • تقارير دقيقة
+        </p>
+        <p class="fr frBlock hide">
+          Solution intelligente pour gérer le stock, les ventes, les achats et les bénéfices.<br>
+          Interface moderne • Rapide • Analyses précises
+        </p>
 
-  
-  
-  
-  
-  
-  
-</div>
+        <div class="cta">
+          <a class="btn primary" href="vente/vente.html">
+            🚀 <span class="arBlock">ابدأ بالمبيعات</span><span class="fr frBlock hide">Démarrer les ventes</span>
+          </a>
+          <a class="btn" href="stock/stock.html">
+            📦 <span class="arBlock">دخول المخزون</span><span class="fr frBlock hide">Accéder au stock</span>
+          </a>
+          <a class="btn" href="achat/achat.html">
+            🛒 <span class="arBlock">دخول المشتريات</span><span class="fr frBlock hide">Accéder aux achats</span>
+          </a>
+        </div>
+      </div>
 
+      <div class="statBox">
+        <div class="stat">
+          <b class="arBlock">⚡ سريع وواضح</b>
+          <b class="fr frBlock hide">⚡ Rapide & clair</b>
 
+          <span class="arBlock">موجّه للاستعمال اليومي: بيع، طباعة، تقارير… بدون تعقيد.</span>
+          <span class="fr frBlock hide">Pensé pour le quotidien: ventes, impression, rapports… sans complexité.</span>
 
+          <div class="bar"><i></i></div>
+        </div>
 
+        <div class="stat">
+          <b class="arBlock">🛡️ حماية وصلاحيات</b>
+          <b class="fr frBlock hide">🛡️ Sécurité & accès</b>
 
+          <span class="arBlock">تحكم بالوصول حسب المستخدم + نسخ احتياطي للبيانات.</span>
+          <span class="fr frBlock hide">Contrôle d’accès par utilisateur + sauvegarde des données.</span>
 
-
-
-<!-- HERO -->
-<div class="hero">
-  <h1>📊 تقديم برنامج ProBMS</h1>
-  <p>
-    نظام ذكي لتسيير المخزون، المبيعات، المشتريات والأرباح  
-    واجهة حديثة • استعمال سريع • تقارير دقيقة
-  </p>
-</div>
-
-<!-- MODULES -->
-<div class="grid">
-  <div class="card">
-    <h3>📦 المخزون</h3>
-    <p>سلع، عائلات، باركود، أسعار، فرص ضائعة.</p>
-    <a href="stock/stock.html">الدخول</a>
+          <div class="bar"><i style="width:62%"></i></div>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <div class="card">
-    <h3>🧾 المبيعات</h3>
-    <p>بيع نقدي/آجل، زبائن، فواتير، تيكيت.</p>
-    <a href="vente/vente.html">الدخول</a>
+  <!-- MODULES -->
+  <div class="sectionHead">
+    <div>
+      <h2 class="arBlock">الوحدات الأساسية</h2>
+      <h2 class="fr frBlock hide">Modules principaux</h2>
+
+      <p class="arBlock">اختر الوحدة لفتح صفحتها.</p>
+      <p class="fr frBlock hide">Choisissez un module pour ouvrir sa page.</p>
+    </div>
+    <span class="chip">ProBMS Modules</span>
   </div>
 
-  <div class="card">
-    <h3>🛒 المشتريات</h3>
-    <p>ممونين، تسديدات، Bon d’Achat.</p>
-    <a href="achat/achat.html">الدخول</a>
+  <div class="grid" id="grid3d">
+
+    <!-- STOCK -->
+    <div class="card" data-tilt>
+      <div class="cardInner">
+        <div class="thumb">
+          <img src="stock/stock.png" alt="Stock" onerror="this.style.display='none'; this.parentElement.style.background='rgba(0,0,0,.20)'; this.parentElement.textContent='STOCK';">
+        </div>
+
+        <div class="meta">
+          <div>
+            <span class="bad"><i></i> Stock • Barcodes • Prix</span>
+            <h3 class="arBlock" style="margin-top:10px">📦 المخزون</h3>
+            <h3 class="fr frBlock hide" style="margin-top:10px">📦 Stock</h3>
+
+            <p class="arBlock">سلع، عائلات، باركود، أسعار، فرص ضائعة، مراقبة الأسعار، صور…</p>
+            <p class="fr frBlock hide">Articles, familles, codes-barres, prix, opportunités perdues, contrôle prix, images…</p>
+
+            <a class="go" href="stock/stock.html"><span class="arBlock">الدخول</span><span class="fr frBlock hide">Accéder</span> →</a>
+          </div>
+          <div class="icon">📦</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VENTE -->
+    <div class="card" data-tilt>
+      <div class="cardInner">
+        <div class="thumb">
+          <img src="vente/vente.png" alt="Vente" onerror="this.style.display='none'; this.parentElement.style.background='rgba(0,0,0,.20)'; this.parentElement.textContent='VENTE';">
+        </div>
+
+        <div class="meta">
+          <div>
+            <span class="bad"><i></i> Vente • Tickets • Factures</span>
+            <h3 class="arBlock" style="margin-top:10px">🧾 المبيعات</h3>
+            <h3 class="fr frBlock hide" style="margin-top:10px">🧾 Ventes</h3>
+
+            <p class="arBlock">بيع نقدي/آجل، زبائن، تسديدات، فواتير، تيكيت…</p>
+            <p class="fr frBlock hide">Vente espèce/crédit, clients, versements, factures, tickets…</p>
+
+            <a class="go" href="vente/vente.html"><span class="arBlock">الدخول</span><span class="fr frBlock hide">Accéder</span> →</a>
+          </div>
+          <div class="icon">🧾</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ACHAT -->
+    <div class="card" data-tilt>
+      <div class="cardInner">
+        <div class="thumb">
+          <img src="achat/achat.png" alt="Achat" onerror="this.style.display='none'; this.parentElement.style.background='rgba(0,0,0,.20)'; this.parentElement.textContent='ACHAT';">
+        </div>
+
+        <div class="meta">
+          <div>
+            <span class="bad"><i></i> Achats • Fournisseurs</span>
+            <h3 class="arBlock" style="margin-top:10px">🛒 المشتريات</h3>
+            <h3 class="fr frBlock hide" style="margin-top:10px">🛒 Achats</h3>
+
+            <p class="arBlock">ممونين، تسديدات، Bon d’Achat، أوامر شراء…</p>
+            <p class="fr frBlock hide">Fournisseurs, versements, Bon d’Achat, bons de commande…</p>
+
+            <a class="go" href="achat/achat.html"><span class="arBlock">الدخول</span><span class="fr frBlock hide">Accéder</span> →</a>
+          </div>
+          <div class="icon">🛒</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BENEFICE -->
+    <div class="card" data-tilt>
+      <div class="cardInner">
+        <div class="thumb">
+          <img src="benefice/benefice.png" alt="Benefice" onerror="this.style.display='none'; this.parentElement.style.background='rgba(0,0,0,.20)'; this.parentElement.textContent='BENEFICE';">
+        </div>
+
+        <div class="meta">
+          <div>
+            <span class="bad"><i></i> Bénéfice • Analyse</span>
+            <h3 class="arBlock" style="margin-top:10px">📊 الأرباح</h3>
+            <h3 class="fr frBlock hide" style="margin-top:10px">📊 Bénéfice</h3>
+
+            <p class="arBlock">تحليل الربح حسب الفترة والسلعة والزبون…</p>
+            <p class="fr frBlock hide">Analyse du bénéfice par période, article, client…</p>
+
+            <a class="go" href="benefice/benefice.html"><span class="arBlock">الدخول</span><span class="fr frBlock hide">Accéder</span> →</a>
+          </div>
+          <div class="icon">📊</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- REGLAGE -->
+    <div class="card" data-tilt>
+      <div class="cardInner">
+        <div class="thumb">
+          <img src="reglage/reglage.png" alt="Reglage" onerror="this.style.display='none'; this.parentElement.style.background='rgba(0,0,0,.20)'; this.parentElement.textContent='REGLAGE';">
+        </div>
+
+        <div class="meta">
+          <div>
+            <span class="bad"><i></i> Sécurité • Accès</span>
+            <h3 class="arBlock" style="margin-top:10px">⚙️ الإعدادات</h3>
+            <h3 class="fr frBlock hide" style="margin-top:10px">⚙️ Réglages</h3>
+
+            <p class="arBlock">صلاحيات المستخدمين، حماية، إعدادات، نسخ احتياطي…</p>
+            <p class="fr frBlock hide">Droits utilisateurs, sécurité, paramètres, sauvegarde…</p>
+
+            <a class="go" href="reglage/reglage.html"><span class="arBlock">الدخول</span><span class="fr frBlock hide">Accéder</span> →</a>
+          </div>
+          <div class="icon">⚙️</div>
+        </div>
+      </div>
+    </div>
+
   </div>
 
-  <div class="card">
-    <h3>📊 الأرباح</h3>
-    <p>تحليل الربح حسب الفترة والسلعة.</p>
-    <a href="benefice/benefice.html">الدخول</a>
+  <div class="footer">
+    <span class="arBlock">www.bmsoftdev.com • ProBMS • 06.62.54.14.86 / 07.76.07.77.94</span>
+    <span class="fr frBlock hide">www.bmsoftdev.com • ProBMS • 06.62.54.14.86 / 07.76.07.77.94</span>
   </div>
 
-  <div class="card">
-    <h3>⚙️ الإعدادات</h3>
-    <p>صلاحيات، حماية، نسخ احتياطي.</p>
-    <a href="reglage/reglage.html">الدخول</a>
-  </div>
 </div>
 
 <!-- MOBILE NAV -->
 <div class="bottom-nav">
-  <a href="index.html" class="active"><span>🏠</span>الرئيسية</a>
-  <a href="stock/stock.html"><span>📦</span>Stock</a>
-  <a href="vente/vente.html"><span>🧾</span>Vente</a>
-  <a href="achat/achat.html"><span>🛒</span>Achat</a>
+  <a href="index.html" class="active">
+    <span>🏠</span>
+    <span class="arBlock">الرئيسية</span><span class="fr frBlock hide">Accueil</span>
+  </a>
+
+  <a href="stock/stock.html">
+    <span>📦</span>
+    <span class="arBlock">المخزون</span><span class="fr frBlock hide">Stock</span>
+  </a>
+
+  <a href="vente/vente.html">
+    <span>🧾</span>
+    <span class="arBlock">المبيعات</span><span class="fr frBlock hide">Ventes</span>
+  </a>
+
+  <a href="achat/achat.html">
+    <span>🛒</span>
+    <span class="arBlock">المشتريات</span><span class="fr frBlock hide">Achats</span>
+  </a>
 </div>
+
+<script>
+/* ===== Language Switch (AR/FR) ===== */
+const arBlocks = document.querySelectorAll('.arBlock');
+const frBlocks = document.querySelectorAll('.frBlock');
+const btnAR = document.getElementById('btnAR');
+const btnFR = document.getElementById('btnFR');
+
+function showAR(){
+  arBlocks.forEach(x => x.classList.remove('hide'));
+  frBlocks.forEach(x => x.classList.add('hide'));
+  document.documentElement.lang = 'ar';
+  document.documentElement.dir = 'rtl';
+  btnAR.classList.add('active');
+  btnFR.classList.remove('active');
+  localStorage.setItem('lang', 'ar');
+}
+function showFR(){
+  arBlocks.forEach(x => x.classList.add('hide'));
+  frBlocks.forEach(x => x.classList.remove('hide'));
+  document.documentElement.lang = 'fr';
+  document.documentElement.dir = 'ltr';
+  btnFR.classList.add('active');
+  btnAR.classList.remove('active');
+  localStorage.setItem('lang', 'fr');
+}
+btnAR.addEventListener('click', showAR);
+btnFR.addEventListener('click', showFR);
+
+/* restore */
+const saved = localStorage.getItem('lang');
+(saved === 'fr') ? showFR() : showAR();
+
+/* ===== Soft 3D hover glow follow mouse ===== */
+document.querySelectorAll('[data-tilt]').forEach(card=>{
+  card.addEventListener('mousemove', (e)=>{
+    const r = card.getBoundingClientRect();
+    const x = e.clientX - r.left;
+    const y = e.clientY - r.top;
+    card.style.setProperty('--x', `${(x/r.width)*100}%`);
+    card.style.setProperty('--y', `${(y/r.height)*100}%`);
+  });
+});
+</script>
 
 </body>
 </html>
