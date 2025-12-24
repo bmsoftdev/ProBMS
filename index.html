@@ -1,1122 +1,575 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ProBMS | تسيير المخزن</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ProBMS | الصفحة الرئيسية</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
 
-  <style>
-    :root{
-      --bg1:#070517;
-      --bg2:#120a2a;
-      --card:#0e0a1f;
-      --stroke:rgba(255,255,255,.10);
-      --text:#f1f5f9;
-      --muted:rgba(241,245,249,.72);
-      --mauve:#b55cff;
-      --mauve2:#7c3aed;
-      --good:#22c55e;
-      --warn:#f59e0b;
-      --bad:#ef4444;
-      --shadow:0 25px 60px rgba(0,0,0,.5);
-      --radius:22px;
-    }
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family:'Cairo',Tahoma,Arial,sans-serif;
-      color:var(--text);
-      background:
-        radial-gradient(900px 500px at 15% 10%, rgba(181,92,255,.25), transparent 60%),
-        radial-gradient(900px 500px at 90% 15%, rgba(124,58,237,.20), transparent 60%),
-        linear-gradient(135deg,var(--bg1),var(--bg2));
-      min-height:100vh;
-    }
-    .wrap{max-width:1120px;margin:28px auto;padding:0 14px}
-    a{color:inherit}
+<style>
+:root{
+  --bgA:#050414;
+  --bgB:#120a2a;
+  --panel: rgba(14,10,31,.72);
+  --panel2: rgba(14,10,31,.55);
+  --stroke: rgba(255,255,255,.10);
+  --stroke2: rgba(181,92,255,.30);
+  --text:#f1f5f9;
+  --muted: rgba(241,245,249,.72);
+  --mauve:#b55cff;
+  --mauve2:#7c3aed;
+  --cyan:#22d3ee;
+  --good:#22c55e;
+  --shadow: 0 30px 90px rgba(0,0,0,.65);
+  --shadow2: 0 18px 45px rgba(0,0,0,.55);
+  --radius: 22px;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family:'Cairo',Tahoma,Arial;
+  color:var(--text);
+  background:
+    radial-gradient(900px 520px at 10% 10%, rgba(181,92,255,.24), transparent 62%),
+    radial-gradient(900px 520px at 85% 25%, rgba(34,211,238,.13), transparent 60%),
+    radial-gradient(1200px 800px at 50% 90%, rgba(124,58,237,.18), transparent 65%),
+    linear-gradient(135deg,var(--bgA),var(--bgB));
+  overflow-x:hidden;
+}
 
-    /* Top bar */
-    .top{
-      display:flex;gap:14px;align-items:center;justify-content:space-between;
-      padding:14px 16px;border:1px solid var(--stroke);border-radius:999px;
-      background:rgba(14,10,31,.55);backdrop-filter: blur(10px);
-      box-shadow: 0 14px 40px rgba(0,0,0,.35);
-    }
-    .brand{display:flex;align-items:center;gap:12px}
-    .logo{
-      width:46px;height:46px;border-radius:14px;
-      background:linear-gradient(135deg, rgba(181,92,255,.22), rgba(124,58,237,.18));
-      border:1px solid var(--stroke);
-      display:flex;align-items:center;justify-content:center;
-      overflow:hidden;font-weight:900;
-    }
-    .logo img{width:100%;height:100%;object-fit:cover}
-    .brand h1{margin:0;font-size:16px;line-height:1.2}
-    .brand p{margin:0;font-size:12px;color:var(--muted)}
-    .actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-    .btn{
-      border:1px solid var(--stroke);
-      background:rgba(255,255,255,.06);
-      color:var(--text);
-      padding:10px 14px;border-radius:999px;
-      cursor:pointer;text-decoration:none;
-      transition:.2s transform,.2s background,.2s border-color;
-      font-weight:800;font-size:13px;
-      display:inline-flex;gap:8px;align-items:center;
-      user-select:none;
-    }
-    .btn:hover{transform:translateY(-1px);background:rgba(255,255,255,.09);border-color:rgba(181,92,255,.35)}
-    .btn.primary{
-      background:linear-gradient(135deg, rgba(181,92,255,.35), rgba(124,58,237,.28));
-      border-color:rgba(181,92,255,.45);
-    }
-    .chip{
-      font-size:12px;padding:8px 10px;border-radius:999px;
-      background:rgba(0,0,0,.25);border:1px solid var(--stroke);
-      color:var(--muted);
-    }
+/* ===== subtle stars ===== */
+.stars{
+  position:fixed; inset:0; pointer-events:none; opacity:.35;
+  background-image:
+    radial-gradient(2px 2px at 20px 30px, rgba(255,255,255,.35), transparent 55%),
+    radial-gradient(1px 1px at 180px 120px, rgba(255,255,255,.25), transparent 60%),
+    radial-gradient(1px 1px at 380px 260px, rgba(255,255,255,.20), transparent 60%),
+    radial-gradient(2px 2px at 70% 20%, rgba(255,255,255,.22), transparent 55%),
+    radial-gradient(1px 1px at 85% 65%, rgba(255,255,255,.18), transparent 60%);
+  background-size: 420px 320px;
+  filter: blur(.2px);
+}
 
-    /* Language toggle */
-    .langToggle{
-      display:flex;gap:10px;align-items:center;justify-content:flex-end;
-      margin: 12px 2px 0;
-    }
-    .toggle{
-      display:inline-flex;gap:8px;align-items:center;
-      border:1px solid var(--stroke);
-      padding:10px 12px;border-radius:999px;
-      background:rgba(255,255,255,.05);
-      cursor:pointer;font-weight:900;font-size:13px;
-      user-select:none;
-    }
-    .toggle small{font-weight:700;color:var(--muted)}
-    .fr{direction:ltr;text-align:left;font-family:Segoe UI, Tahoma, Arial, sans-serif}
-    .hide{display:none!important}
+/* ===== Layout ===== */
+.wrap{max-width:1200px; margin:0 auto; padding:18px 18px 28px}
 
-    /* Hero */
-    .hero{
-      margin-top:16px;
-      border-radius:var(--radius);
-      border:1px solid var(--stroke);
-      background:rgba(14,10,31,.55);
-      box-shadow:var(--shadow);
-      overflow:hidden;
-    }
-    .heroInner{
-      display:grid;
-      grid-template-columns: 1.2fr .8fr;
-      gap:16px;
-      padding:22px;
-    }
-    @media (max-width: 900px){
-      .heroInner{grid-template-columns:1fr}
-    }
-    .kicker{
-      display:inline-flex;gap:8px;align-items:center;
-      color:var(--muted);
-      font-size:12px;
-      border:1px solid var(--stroke);
-      padding:8px 10px;border-radius:999px;
-      background:rgba(255,255,255,.05);
-      width:fit-content;
-    }
-    .title{
-      margin:14px 0 8px;
-      font-size:30px;line-height:1.2;
-      letter-spacing:.2px;
-    }
-    .subtitle{
-      margin:0;
-      color:var(--muted);
-      font-size:15px;
-      line-height:1.9;
-    }
-    .bullets{
-      margin:14px 0 0;
-      display:grid;gap:10px;
-      grid-template-columns:1fr 1fr;
-    }
-    @media (max-width: 520px){
-      .bullets{grid-template-columns:1fr}
-    }
-    .bullet{
-      border:1px solid var(--stroke);
-      background:rgba(255,255,255,.05);
-      padding:12px 12px;border-radius:16px;
-      display:flex;gap:10px;align-items:flex-start;
-    }
-    .dot{
-      width:10px;height:10px;border-radius:99px;
-      margin-top:6px;
-      background:linear-gradient(135deg, var(--mauve), var(--mauve2));
-      box-shadow:0 0 0 4px rgba(181,92,255,.10);
-      flex:0 0 auto;
-    }
-    .bullet b{display:block;margin-bottom:4px}
-    .bullet span{color:var(--muted);font-size:13px;line-height:1.7}
+/* ===== Topbar (glass) ===== */
+.topbar{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:14px 16px;
+  border:1px solid var(--stroke);
+  background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+  border-radius: 18px;
+  box-shadow: var(--shadow2);
+  backdrop-filter: blur(10px);
+}
+.brand{display:flex; align-items:center; gap:12px; min-width:260px;}
+.logo{
+  width:46px; height:46px; border-radius:14px;
+  background: linear-gradient(135deg, var(--mauve), var(--mauve2));
+  display:grid; place-items:center;
+  font-weight:900; letter-spacing:.5px;
+  box-shadow: 0 12px 30px rgba(124,58,237,.38);
+}
+.brand b{font-size:15px}
+.brand small{display:block; color:var(--muted); margin-top:2px}
+.pills{display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-start}
+.pill{
+  display:inline-flex; align-items:center; gap:8px;
+  padding:8px 12px; border-radius:999px;
+  border:1px solid var(--stroke);
+  background: rgba(255,255,255,.04);
+  color: var(--text);
+  text-decoration:none;
+  font-size:13px;
+  transition:.2s;
+}
+.pill:hover{transform: translateY(-2px); border-color: rgba(181,92,255,.45)}
+.pill .dot{
+  width:9px; height:9px; border-radius:999px;
+  background: radial-gradient(circle at 30% 30%, #fff, rgba(255,255,255,.25));
+  box-shadow: 0 0 18px rgba(181,92,255,.55);
+}
+.pill.whats{border-color: rgba(34,197,94,.35)}
+.pill.whats .dot{box-shadow:0 0 18px rgba(34,197,94,.65)}
+.avatar{
+  display:flex; align-items:center; gap:10px;
+}
+.badge{
+  width:44px; height:44px; border-radius:14px;
+  background: rgba(181,92,255,.14);
+  border:1px solid rgba(181,92,255,.35);
+  display:grid; place-items:center;
+  font-weight:900;
+}
 
-    .heroMedia{
-      border:1px dashed rgba(181,92,255,.35);
-      border-radius:18px;
-      background:rgba(0,0,0,.18);
-      min-height:280px;
-      display:flex;align-items:center;justify-content:center;
-      overflow:hidden;
-      position:relative;
-    }
-    .heroMedia img{width:100%;height:100%;object-fit:cover;display:block}
-    .badge{
-      position:absolute;top:12px;left:12px;
-      padding:8px 10px;border-radius:999px;
-      background:rgba(0,0,0,.35);
-      border:1px solid var(--stroke);
-      font-size:12px;color:var(--text);
-    }
-    .placeholder{
-      text-align:center;color:var(--muted);font-size:13px;
-      padding:18px;
-    }
+/* ===== Hero ===== */
+.hero{
+  margin-top:18px;
+  border:1px solid var(--stroke);
+  background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow:hidden;
+  position:relative;
+}
+.hero::before{
+  content:"";
+  position:absolute; inset:-2px;
+  background:
+    radial-gradient(600px 260px at 20% 30%, rgba(181,92,255,.22), transparent 62%),
+    radial-gradient(520px 240px at 80% 25%, rgba(34,211,238,.14), transparent 60%);
+  pointer-events:none;
+}
+.heroInner{
+  position:relative;
+  display:grid;
+  grid-template-columns: 1.2fr .8fr;
+  gap:18px;
+  padding:26px 22px;
+  align-items:center;
+}
+@media(max-width: 900px){
+  .heroInner{grid-template-columns:1fr}
+}
+.kicker{
+  display:inline-flex; align-items:center; gap:10px;
+  padding:7px 12px;
+  border-radius:999px;
+  border:1px solid rgba(181,92,255,.35);
+  background: rgba(181,92,255,.12);
+  color:#e9d5ff;
+  font-size:13px;
+}
+.hTitle{
+  font-size:44px; line-height:1.15; margin:12px 0 10px;
+}
+.hTitle span{
+  background: linear-gradient(135deg, #fff, #d8b4fe);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+.hSub{
+  margin:0;
+  color:var(--muted);
+  line-height:1.9;
+  font-size:16.5px;
+}
+.ctaRow{display:flex; gap:10px; flex-wrap:wrap; margin-top:16px}
+.btn{
+  border:0; cursor:pointer;
+  padding:10px 16px;
+  border-radius:14px;
+  font-family:inherit;
+  text-decoration:none;
+  display:inline-flex; align-items:center; gap:10px;
+  transition:.2s;
+}
+.btn.primary{
+  color:#fff;
+  background: linear-gradient(135deg, var(--mauve), var(--mauve2));
+  box-shadow: 0 14px 40px rgba(124,58,237,.35);
+}
+.btn.primary:hover{transform: translateY(-2px)}
+.btn.ghost{
+  color:var(--text);
+  background: rgba(255,255,255,.04);
+  border:1px solid var(--stroke);
+}
+.btn.ghost:hover{border-color: rgba(181,92,255,.45); transform: translateY(-2px)}
+.miniStats{
+  display:grid;
+  grid-template-columns: 1fr;
+  gap:12px;
+}
+.stat{
+  padding:14px 14px;
+  border-radius:18px;
+  border:1px solid var(--stroke);
+  background: rgba(0,0,0,.18);
+  backdrop-filter: blur(10px);
+}
+.stat b{display:block; font-size:14px; margin-bottom:6px}
+.stat span{color:var(--muted); font-size:13px; line-height:1.7}
+.stat .bar{
+  height:10px; border-radius:999px;
+  background: rgba(255,255,255,.08);
+  overflow:hidden; margin-top:10px;
+}
+.stat .bar > i{
+  display:block; height:100%;
+  width:72%;
+  background: linear-gradient(135deg, rgba(181,92,255,.9), rgba(34,211,238,.55));
+  border-radius:999px;
+}
 
-    /* Sections */
-    .section{margin-top:18px}
-    .sectionHead{
-      display:flex;align-items:flex-end;justify-content:space-between;gap:10px;
-      margin:0 4px 10px;
-    }
-    .sectionHead h2{margin:0;font-size:18px}
-    .sectionHead p{margin:0;color:var(--muted);font-size:13px}
+/* ===== Modules Area ===== */
+.section{
+  margin-top:18px;
+}
+.sectionHead{
+  display:flex; justify-content:space-between; align-items:flex-end;
+  gap:10px; flex-wrap:wrap;
+  margin: 18px 4px 12px;
+}
+.sectionHead h2{margin:0; font-size:20px}
+.sectionHead p{margin:4px 0 0; color:var(--muted); font-size:13px}
+.chip{
+  padding:7px 12px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.04);
+  color:#e9d5ff;
+  font-size:13px;
+}
 
-    .grid{
-      display:grid;gap:12px;
-      grid-template-columns: repeat(3, 1fr);
-    }
-    @media (max-width: 980px){ .grid{grid-template-columns: repeat(2, 1fr);} }
-    @media (max-width: 640px){ .grid{grid-template-columns: 1fr;} }
+/* Creative grid: big card + 2x2 */
+.grid{
+  display:grid;
+  grid-template-columns: 1.35fr 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap:14px;
+}
+@media(max-width: 980px){
+  .grid{grid-template-columns:1fr; grid-template-rows:auto}
+}
+.card{
+  position:relative;
+  border-radius: var(--radius);
+  border:1px solid var(--stroke);
+  background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+  box-shadow: var(--shadow2);
+  overflow:hidden;
+  backdrop-filter: blur(10px);
+  transform-style: preserve-3d;
+}
+.card::after{
+  content:"";
+  position:absolute; inset:-2px;
+  background: radial-gradient(420px 220px at var(--x, 50%) var(--y, 20%), rgba(181,92,255,.20), transparent 60%);
+  pointer-events:none;
+  opacity:.75;
+}
+.card:hover{border-color: rgba(181,92,255,.45)}
+.cardInner{
+  position:relative;
+  padding:16px;
+}
+.preview{
+  border-radius:18px;
+  border:1px solid rgba(255,255,255,.10);
+  background: rgba(0,0,0,.22);
+  overflow:hidden;
+}
+.preview img{
+  width:100%;
+  height:210px;
+  object-fit:cover;
+  display:block;
+  filter: saturate(1.05) contrast(1.03);
+}
+.meta{
+  display:flex; align-items:flex-start; justify-content:space-between;
+  gap:10px;
+  margin-top:12px;
+}
+.meta h3{margin:0; font-size:18px}
+.meta p{margin:6px 0 0; color:var(--muted); font-size:13.5px; line-height:1.7}
+.iconBubble{
+  width:44px; height:44px; border-radius:16px;
+  display:grid; place-items:center;
+  border:1px solid rgba(181,92,255,.28);
+  background: rgba(181,92,255,.10);
+}
+.actions{
+  margin-top:12px;
+  display:flex; gap:10px; flex-wrap:wrap;
+}
+.go{
+  display:inline-flex; align-items:center; gap:10px;
+  padding:10px 14px;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.04);
+  color:#fff; text-decoration:none;
+  transition:.2s;
+}
+.go.primary{
+  border:0;
+  background: linear-gradient(135deg, var(--mauve), var(--mauve2));
+}
+.go:hover{transform: translateY(-2px)}
+.smallTag{
+  display:inline-flex; align-items:center; gap:8px;
+  padding:6px 10px; border-radius:999px;
+  border:1px solid rgba(255,255,255,.10);
+  background: rgba(0,0,0,.18);
+  color: rgba(241,245,249,.92);
+  font-size:12px;
+}
+.smallTag i{
+  width:9px;height:9px;border-radius:999px;
+  background: var(--mauve);
+  box-shadow:0 0 18px rgba(181,92,255,.65);
+  display:inline-block;
+}
 
-    .card{
-      border:1px solid var(--stroke);
-      background:rgba(14,10,31,.55);
-      border-radius:18px;
-      box-shadow: 0 18px 45px rgba(0,0,0,.35);
-      overflow:hidden;
-    }
+/* Make Stock big */
+.big{grid-row: 1 / span 2; grid-column: 1}
+@media(max-width: 980px){
+  .big{grid-row:auto; grid-column:auto}
+  .preview img{height:200px}
+}
 
-    /* ===== FIX IMAGE SQUARE 1:1 ===== */
-    .card .img{
-      width: 100%;
-      aspect-ratio: 1 / 1;
-      height: auto;
-      background:rgba(0,0,0,.18);
-      border-bottom:1px solid var(--stroke);
-      display:flex;align-items:center;justify-content:center;
-      overflow:hidden;
-      position:relative;
-    }
-    .card .img img{
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      object-position: center;
-      display:block;
-      cursor: zoom-in;
-    }
+/* ===== Quick links ===== */
+.quick{
+  margin-top:16px;
+  display:flex; gap:10px; flex-wrap:wrap;
+  padding:14px;
+  border-radius: 18px;
+  border:1px solid var(--stroke);
+  background: rgba(255,255,255,.03);
+}
+.q{
+  display:inline-flex; align-items:center; gap:10px;
+  padding:10px 12px;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,.10);
+  background: rgba(0,0,0,.14);
+  text-decoration:none;
+  color:#fff;
+  font-size:13px;
+  transition:.2s;
+}
+.q:hover{transform: translateY(-2px); border-color: rgba(181,92,255,.45)}
 
-    .cap{
-      position:absolute;bottom:10px;right:10px;
-      background:rgba(0,0,0,.40);
-      border:1px solid var(--stroke);
-      padding:7px 10px;border-radius:999px;
-      font-size:12px;color:var(--text);
-    }
-    .card .body{padding:14px}
-    .card h3{margin:0 0 6px;font-size:15px}
-    .card p{margin:0;color:var(--muted);font-size:13px;line-height:1.85}
-    .tags{margin-top:10px;display:flex;flex-wrap:wrap;gap:8px}
-    .tag{
-      font-size:12px;color:var(--text);
-      padding:7px 10px;border-radius:999px;
-      border:1px solid var(--stroke);
-      background:rgba(255,255,255,.05);
-    }
+/* ===== Footer ===== */
+.footer{
+  margin-top:18px;
+  padding:18px;
+  text-align:center;
+  color:var(--muted);
+  border-top:1px solid rgba(255,255,255,.08);
+}
 
-    /* Callouts */
-    .callouts{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
-    @media(max-width:800px){.callouts{grid-template-columns:1fr}}
-    .callout{
-      border:1px solid rgba(181,92,255,.25);
-      background:linear-gradient(135deg,rgba(181,92,255,.14),rgba(124,58,237,.08));
-      border-radius:18px;
-      padding:14px;
-    }
-    .callout b{display:block;margin-bottom:6px}
-    .foot{
-      text-align:center;color:rgba(241,245,249,.55);
-      font-size:12px;padding:16px 0 26px;
-    }
-
-    /* ===== IMAGE LIGHTBOX ===== */
-    .lightbox{
-      position:fixed;
-      inset:0;
-      background:rgba(5,5,15,.92);
-      backdrop-filter: blur(6px);
-      display:none;
-      align-items:center;
-      justify-content:center;
-      z-index:9999;
-      padding:20px;
-    }
-    .lightbox.active{display:flex}
-    .lightbox img{
-      max-width:95%;
-      max-height:90vh;
-      border-radius:18px;
-      box-shadow:0 30px 80px rgba(0,0,0,.8);
-      animation:zoomIn .25s ease-out;
-      background:#000;
-    }
-    .lightbox .close{
-      position:absolute;
-      top:18px;
-      left:18px;
-      font-size:26px;
-      font-weight:900;
-      color:#fff;
-      cursor:pointer;
-      padding:6px 12px;
-      border-radius:999px;
-      background:rgba(255,255,255,.15);
-      border:1px solid rgba(255,255,255,.25);
-    }
-    @keyframes zoomIn{
-      from{transform:scale(.85);opacity:0}
-      to{transform:scale(1);opacity:1}
-    }
-  </style>
+/* Nice focus */
+a:focus{outline:2px solid rgba(181,92,255,.55); outline-offset:3px}
+</style>
 </head>
 
 <body>
-  <div class="wrap">
+<div class="stars"></div>
 
-    <!-- Top -->
-    <div class="top">
-      <div class="brand">
-        <div class="logo">
-          <img src="logo.png" alt="BM Soft" onerror="this.style.display='none'; this.parentElement.textContent='BM';">
-        </div>
-        <div>
-          <h1>BM Soft • ProBMS</h1>
-          <p class="arBlock">صفحة توضيحية: تسيير المخزن</p>
-          <p class="fr frBlock hide">Page: Gestion du stock</p>
-        </div>
-      </div>
+<div class="wrap">
 
-      <div class="actions">
-        <span class="chip">Module: Stock</span>
-        <a class="btn primary" href="https://wa.me/213662541486" target="_blank" rel="noopener">واتساب</a>
-        <a class="btn" href="tel:+213776077794">اتصال</a>
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div class="brand">
+      <div class="logo">BM</div>
+      <div>
+        <b>BM Soft • ProBMS</b>
+        <small>منصة التسيير التجاري الذكي</small>
       </div>
     </div>
 
-    <!-- Language toggle -->
-    <div class="langToggle">
-      <div class="toggle" id="btnAr">العربية <small>AR</small></div>
-      <div class="toggle" id="btnFr">Français <small>FR</small></div>
+    <div class="pills">
+      <a class="pill whats" href="https://wa.me/213662541486" target="_blank" title="WhatsApp">
+        <span class="dot"></span> واتساب 06.62.54.14.86
+      </a>
+      <a class="pill" href="https://www.bmsoftdev.com" target="_blank" title="Website">
+        <span class="dot"></span> bmsoftdev.com
+      </a>
     </div>
 
-    <!-- Hero -->
-    <div class="hero">
-      <div class="heroInner">
-        <div>
-          <div class="kicker arBlock">📦 تحكم كامل في السلع، الكميات، الأسعار والباركود</div>
-          <div class="kicker fr frBlock hide">📦 Contrôle total: produits, quantités, prix & codes-barres</div>
-
-          <h2 class="title arBlock">تسيير المخزن في ProBMS</h2>
-          <p class="subtitle arBlock">
-            من إدخال السلعة إلى الطباعة والتنبيهات… كل شيء منظم وعملي.
-            الهدف: تقليل الأخطاء، تسريع العمل، واتخاذ قرارات أفضل بثقة.
-          </p>
-
-          <h2 class="title fr frBlock hide">Gestion du stock dans ProBMS</h2>
-          <p class="subtitle fr frBlock hide">
-            De la création du produit jusqu’à l’impression et les alertes… tout est clair et pratique.
-            Objectif: moins d’erreurs, plus de vitesse, meilleures décisions.
-          </p>
-
-          <div class="bullets">
-            <div class="bullet">
-              <div class="dot"></div>
-              <div>
-                <b class="arBlock">🧾 إدارة السلع الذكية</b>
-                <span class="arBlock">أسعار متعددة + ربح محسوب + باركود + صورة.</span>
-
-                <b class="fr frBlock hide">🧾 Produits intelligents</b>
-                <span class="fr frBlock hide">Multi-prix + marge calculée + code-barres + photo.</span>
-              </div>
-            </div>
-
-            <div class="bullet">
-              <div class="dot"></div>
-              <div>
-                <b class="arBlock">🔔 تنبيهات ونواقص</b>
-                <span class="arBlock">حد أدنى للمخزون لتفادي نفاد السلع.</span>
-
-                <b class="fr frBlock hide">🔔 Alertes stock</b>
-                <span class="fr frBlock hide">Seuil minimum pour éviter les ruptures.</span>
-              </div>
-            </div>
-
-            <div class="bullet">
-              <div class="dot"></div>
-              <div>
-                <b class="arBlock">🏷️ ملصقات الكودبار</b>
-                <span class="arBlock">A4 أو ملصقات الكودبار + قوالب متعددة + طباعة سريعة.</span>
-
-                <b class="fr frBlock hide">🏷️ Étiquettes & codes</b>
-                <span class="fr frBlock hide">A4 ou rouleau + modèles + impression rapide.</span>
-              </div>
-            </div>
-
-            <div class="bullet">
-              <div class="dot"></div>
-              <div>
-                <b class="arBlock">🧩 مرونة حسب النشاط</b>
-                <span class="arBlock">تفعيل/إخفاء خصائص حسب نوع التجارة.</span>
-
-                <b class="fr frBlock hide">🧩 Flexible selon l’activité</b>
-                <span class="fr frBlock hide">Activer/masquer les options selon le commerce.</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="heroMedia">
-          <div class="badge">📷 GESTION COMMERCIALE PRO BMS</div>
-          <img src="hero_stock.png" alt="Stock" onerror="this.style.display='none'; this.nextElementSibling.classList.remove('hide');">
-          <div class="placeholder hide arBlock"></div>
-          <div class="placeholder hide fr frBlock"></div>
-        </div>
-      </div>
+    <div class="avatar">
+      <div class="badge">BM</div>
     </div>
+  </div>
 
-    <!-- Mini highlights تحت Hero -->
-    <div class="callouts" style="margin-top:14px">
-      <div class="callout">
-        <b class="arBlock">📉 الفرص الضائعة في المخزن</b>
-        <p class="arBlock">
-          كشف ذكي للسلع ذات الطلب العالي خلال آخر 12 شهرًا
-          والتي نفد مخزونها أو كانت قريبة من النفاد،
-          ما يساعدك على إعادة الشراء في الوقت المناسب.
+  <!-- HERO -->
+  <div class="hero">
+    <div class="heroInner">
+      <div>
+        <span class="kicker">✨ لوحة تحكم الوحدات • ProBMS</span>
+        <div class="hTitle">مرحبًا بك في <span>ProBMS</span> 📦</div>
+        <p class="hSub">
+          نظام متكامل لتسيير <b>المخزون</b>، <b>المبيعات</b>، <b>المشتريات</b>،
+          <b>الأرباح</b> و <b>الإعدادات</b>.<br>
+          واجهة حديثة • تقارير دقيقة • تحكم كامل.
         </p>
 
-        <b class="fr frBlock hide">📉 Opportunités perdues</b>
-        <p class="fr frBlock hide">
-          Détection des produits à forte demande sur les 12 derniers mois
-          avec un stock nul ou critique,
-          afin de récupérer des ventes perdues.
-        </p>
-      </div>
-
-      <div class="callout">
-        <b class="arBlock">⚠️ مراقبة أخطاء الأسعار</b>
-        <p class="arBlock">
-          متابعة تلقائية للسلع التي تحتوي على أسعار غير منطقية
-          أو بيع أقل من سعر الشراء،
-          لتفادي الخسائر قبل وقوعها.
-        </p>
-
-        <b class="fr frBlock hide">⚠️ Contrôle des prix</b>
-        <p class="fr frBlock hide">
-          Contrôle automatique des prix incohérents
-          ou ventes inférieures au prix d’achat,
-          pour protéger la marge avant la perte.
-        </p>
-      </div>
-    </div>
-
-    <!-- SECTION: Produits -->
-    <div class="section">
-      <div class="sectionHead">
-        <div>
-          <h2 class="arBlock">⭐ إدارة السلع (Produits)</h2>
-          <p class="arBlock">بطاقة سلعة كاملة تجمع كل ما يحتاجه التاجر في نافذة واحدة</p>
-
-          <h2 class="fr frBlock hide">⭐ Gestion des produits</h2>
-          <p class="fr frBlock hide">Une fiche produit complète: tout au même endroit</p>
-        </div>
-        <p class="chip">Multi-prix • Code-barres • Marge</p>
-      </div>
-
-      <div class="grid">
-        <div class="card">
-          <div class="img">
-            <img src="produits.png" alt="Produits">
-            <div class="cap arBlock">واجهة إدارة السلع</div>
-            <div class="cap fr frBlock hide">Écran produits</div>
-          </div>
-          <div class="body">
-            <h3 class="arBlock">كل تفاصيل السلعة… بدون تعقيد</h3>
-            <p class="arBlock">
-              السلع في ProBMS ليست مجرد اسم وسعر، بل وحدات ذكية:
-              تصنيف (عائلة/ماركة)، أسعار متعددة، باركود، صورة، كمية وتنبيه… مع حساب آلي لهوامش الربح.
-            </p>
-
-            <h3 class="fr frBlock hide">Tout sur le produit, simplement</h3>
-            <p class="fr frBlock hide">
-              ProBMS regroupe: famille/marque, multi-prix, code-barres, photo, quantité & alerte,
-              avec marge calculée automatiquement.
-            </p>
-
-            <div class="tags">
-              <span class="tag">Détail</span><span class="tag">Gros</span><span class="tag">Spécial</span><span class="tag">CB</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="img">
-            <img src="controle_prix.png" alt="Contrôle prix">
-            <div class="cap arBlock">حماية من البيع بالخسارة</div>
-            <div class="cap fr frBlock hide">Anti-vente à perte</div>
-          </div>
-          <div class="body">
-            <h3 class="arBlock">حماية ذكية من الخسارة</h3>
-            <p class="arBlock">
-              عند إدخال سعر بيع أقل من سعر الشراء، يظهر تنبيه واضح يمنع الخطأ قبل وقوعه.
-              هذا يحمي هامش الربح ويقلل مشاكل “السهو”.
-            </p>
-
-            <h3 class="fr frBlock hide">Contrôle des prix</h3>
-            <p class="fr frBlock hide">
-              Si le prix de vente est inférieur au prix d’achat, une alerte empêche l’erreur.
-              Cela protège la marge et évite les oublis.
-            </p>
-
-            <div class="tags">
-              <span class="tag">Sécurité</span><span class="tag">Marge</span><span class="tag">Contrôle</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="img">
-            <img src="options.png" alt="Options">
-            <div class="cap arBlock">مرونة حسب النشاط</div>
-            <div class="cap fr frBlock hide">Options حسب activité</div>
-          </div>
-          <div class="body">
-            <h3 class="arBlock">خصائص حسب نوع تجارتك</h3>
-            <p class="arBlock">
-              لست مضطرًا لاستعمال كل شيء.
-              يمكنك إظهار/إخفاء خيارات مثل: الماركة، وحدة القياس، تاريخ الصلاحية، الجملة، السعر الخاص…
-              لتبقى الواجهة بسيطة حسب احتياجك.
-            </p>
-
-            <h3 class="fr frBlock hide">Interface adaptée</h3>
-            <p class="fr frBlock hide">
-              Activez/masquez les options (marque, unité, péremption, prix de gros, prix spécial) selon vos besoins.
-            </p>
-          </div>
+        <div class="ctaRow">
+          <a class="btn primary" href="vente/vente.html">🚀 ابدأ بالمبيعات</a>
+          <a class="btn ghost" href="stock/stock.html">📦 دخول المخزون</a>
+          <a class="btn ghost" href="achat/achat.html">🛒 دخول المشتريات</a>
         </div>
       </div>
 
-      <div class="callouts">
-        <div class="callout">
-          <b class="arBlock">🔧 SERVICE (خدمة)</b>
-          <p class="arBlock">مثل: تصليح، نقل، تركيب… عنصر يُباع كخدمة بدون مخزون وبدون كمية، لكنه يظهر في الفواتير والتقارير.</p>
-          <b class="fr frBlock hide">🔧 SERVICE</b>
-          <p class="fr frBlock hide">Réparation, transport, pose… facturé comme service, sans stock/quantité, mais présent dans factures & rapports.</p>
+      <div class="miniStats">
+        <div class="stat">
+          <b>⚡ سريع وواضح</b>
+          <span>موجّه للاستخدام اليومي: بيع، طباعة، تقارير… بدون تعقيد.</span>
+          <div class="bar"><i></i></div>
         </div>
-        <div class="callout">
-          <b class="arBlock">💰 MONTANT (مبلغ)</b>
-          <p class="arBlock">عنصر مالي مباشر يُضاف لايصالات البيع(رسوم/مصاريف/إضافة…): مبلغ فقط، بدون كمية ولا مخزون.</p>
-          <b class="fr frBlock hide">💰 MONTANT</b>
-          <p class="fr frBlock hide">Ligne de somme d’argent (frais, ajout…): montant uniquement, sans stock ni quantité.</p>
+        <div class="stat">
+          <b>🛡️ حماية وصلاحيات</b>
+          <span>تحكم بالوصول حسب المستخدم + نسخ احتياطي للبيانات.</span>
+          <div class="bar"><i style="width:62%"></i></div>
         </div>
-      </div>
-    </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="grid">
-
-  <!-- CARD 1 : Multi Code Barre -->
-  <div class="card">
-    <div class="img">
-      <img src="multicodebarre.png" alt="Multi code barre ProBMS">
-      <div class="cap arBlock">عدة كودبار لنفس المنتج</div>
-      <div class="cap fr frBlock hide">Plusieurs codes pour un article</div>
-    </div>
-    <div class="body">
-      <h3 class="arBlock">مرونة قصوى في البيع</h3>
-      <p class="arBlock">
-        عدة أكواد باركود لنفس السلعة مع نفس السعر والمخزون الموحد.
-      </p>
-      <div class="tags">
-        <span class="tag">Rapide</span>
-        <span class="tag">Flexible</span>
-        <span class="tag">Sans erreur</span>
       </div>
     </div>
   </div>
 
-  <!-- CARD 2 : Vente par images -->
-  <div class="card">
-    <div class="img">
-      <img src="galerie.png" alt="Vente par images">
-      <div class="cap arBlock">البيع بالصور</div>
-      <div class="cap fr frBlock hide">Vente par images</div>
-    </div>
-    <div class="body">
-      <h3 class="arBlock">بيع بدون كودبار</h3>
-      <p class="arBlock">
-        بيع مباشر بالضغط على صورة السلعة، مثالي للخضر والفواكه والحبوب.
-      </p>
-      <div class="tags">
-        <span class="tag">Visuel</span>
-        <span class="tag">Rapide</span>
+  <!-- MODULES -->
+  <div class="section">
+    <div class="sectionHead">
+      <div>
+        <h2>الوحدات الأساسية</h2>
+        <p>اختر الوحدة التي تريد شرحها داخل التكوين.</p>
       </div>
+      <span class="chip">ProBMS Modules</span>
+    </div>
+
+    <div class="grid" id="grid3d">
+      <!-- STOCK (BIG) -->
+      <div class="card big" data-tilt>
+        <div class="cardInner">
+          <div class="preview">
+            <img src="stock/stock.png" alt="Stock">
+          </div>
+
+          <div class="meta">
+            <div>
+              <div class="smallTag"><i></i> Stock • Barcodes • Prix</div>
+              <h3 style="margin-top:10px">📦 تسيير المخزون</h3>
+              <p>stock / famille / marque / فرص ضائعة / 3 أسعار بيع / مراقبة الأسعار / صور + باركود + multi-code.</p>
+            </div>
+            <div class="iconBubble">📦</div>
+          </div>
+
+          <div class="actions">
+            <a class="go primary" href="stock/stock.html">الدخول</a>
+            <a class="go" href="vente/vente.html">فتح المبيعات</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- VENTE -->
+      <div class="card" data-tilt>
+        <div class="cardInner">
+          <div class="preview"><img src="vente/vente.png" alt="Vente"></div>
+          <div class="meta">
+            <div>
+              <div class="smallTag"><i></i> Vente • Tickets • Factures</div>
+              <h3 style="margin-top:10px">🧾 المبيعات</h3>
+              <p>بيع نقدي/آجل، زبائن، تسديدات، relèves، statistiques، factures، proforma…</p>
+            </div>
+            <div class="iconBubble">🧾</div>
+          </div>
+          <div class="actions">
+            <a class="go primary" href="vente/vente.html">الدخول</a>
+            <a class="go" href="benefice/benefice.html">الأرباح</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ACHAT -->
+      <div class="card" data-tilt>
+        <div class="cardInner">
+          <div class="preview"><img src="achat/achat.png" alt="Achat"></div>
+          <div class="meta">
+            <div>
+              <div class="smallTag"><i></i> Achats • Fournisseurs</div>
+              <h3 style="margin-top:10px">🛒 المشتريات</h3>
+              <p>ممونين، تسديدات، إدخال Bon d’Achat، relèves achats، bon de commande.</p>
+            </div>
+            <div class="iconBubble">🛒</div>
+          </div>
+          <div class="actions">
+            <a class="go primary" href="achat/achat.html">الدخول</a>
+            <a class="go" href="stock/stock.html">المخزون</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- BENEFICE -->
+      <div class="card" data-tilt>
+        <div class="cardInner">
+          <div class="preview"><img src="benefice/benefice.png" alt="Benefice"></div>
+          <div class="meta">
+            <div>
+              <div class="smallTag"><i></i> Bénéfice • Analyse</div>
+              <h3 style="margin-top:10px">📊 الأرباح</h3>
+              <p>حسب bon / client / article / famille / marque / articles dormants / périodes / par mois…</p>
+            </div>
+            <div class="iconBubble">📊</div>
+          </div>
+          <div class="actions">
+            <a class="go primary" href="benefice/benefice.html">الدخول</a>
+            <a class="go" href="vente/vente.html">المبيعات</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- REGLAGE -->
+      <div class="card" data-tilt>
+        <div class="cardInner">
+          <div class="preview"><img src="reglage/reglage.png" alt="Reglage"></div>
+          <div class="meta">
+            <div>
+              <div class="smallTag"><i></i> Sécurité • Accès</div>
+              <h3 style="margin-top:10px">⚙️ الإعدادات</h3>
+              <p>صلاحيات المستخدمين، contrôle d’accès، paramétrage، sauvegarde sécurité…</p>
+            </div>
+            <div class="iconBubble">⚙️</div>
+          </div>
+          <div class="actions">
+            <a class="go primary" href="reglage/reglage.html">الدخول</a>
+            <a class="go" href="stock/stock.html">المخزون</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- QUICK -->
+    <div class="quick">
+      <a class="q" href="stock/stock.html">📦 Stock</a>
+      <a class="q" href="vente/vente.html">🧾 Vente</a>
+      <a class="q" href="achat/achat.html">🛒 Achat</a>
+      <a class="q" href="benefice/benefice.html">📊 Bénéfice</a>
+      <a class="q" href="reglage/reglage.html">⚙️ Réglage</a>
+      <a class="q" href="https://www.bmsoftdev.com" target="_blank">🌐 Site</a>
     </div>
   </div>
 
-  <!-- CARD 3 : Vente par prix -->
-  <div class="card">
-    <div class="img">
-      <img src="vente_avec_prix.png" alt="Vente par prix">
-      <div class="cap arBlock">البيع بالسعر</div>
-      <div class="cap fr frBlock hide">Vente par prix</div>
-    </div>
-    <div class="body">
-      <h3 class="arBlock">إدخال السعر مباشرة</h3>
-      <p class="arBlock">
-        أدخل السعر، والبرنامج يحسب الوزن تلقائيًا (بيع بالميزان).
-      </p>
-      <div class="tags">
-        <span class="tag">Balance</span>
-        <span class="tag">Automatique</span>
-      </div>
-    </div>
-  </div>
-
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <!-- SECTION: Liste stock + organisation -->
-    <div class="section">
-      <div class="sectionHead">
-        <div>
-          <h2 class="arBlock">📋 قائمة المخزن (Liste Stock)</h2>
-          <p class="arBlock">بحث سريع وفلاتر تسهّل الجرد والمتابعة</p>
-
-          <h2 class="fr frBlock hide">📋 Liste stock</h2>
-          <p class="fr frBlock hide">Recherche rapide et filtres pour suivre le stock</p>
-        </div>
-        <p class="chip">Recherche • Alerte • Péremption</p>
-      </div>
-
-      <div class="grid">
-        <div class="card">
-          <div class="img">
-            <img src="liste_stock.png" alt="Liste stock">
-            <div class="cap arBlock">عرض شامل للمخزن</div>
-            <div class="cap fr frBlock hide">Vue globale stock</div>
-          </div>
-          <div class="body">
-            <h3 class="arBlock">قرار أسرع لأن الصورة كاملة</h3>
-            <p class="arBlock">
-              من قائمة واحدة ترى: الكمية، سعر الشراء/البيع، التنبيه، الجملة، الخاص…
-              مع أدوات للمراقبة مثل: نواقص المخزن، أخطاء الأسعار، الصلاحية، الأرشفة.
-            </p>
-
-            <h3 class="fr frBlock hide">Décision plus rapide</h3>
-            <p class="fr frBlock hide">
-              Une seule liste: quantité, achat/vente, alerte, prix gros/spécial…
-              avec contrôles: ruptures, erreurs prix, péremption, archivage.
-            </p>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="img">
-            <img src="familles.png" alt="Familles">
-            <div class="cap arBlock">أصناف السلع</div>
-            <div class="cap fr frBlock hide">Familles</div>
-          </div>
-          <div class="body">
-            <h3 class="arBlock">تصنيف احترافي</h3>
-            <p class="arBlock">
-              تقسيم السلع إلى عائلات يجعل البحث أسرع ويعطي تقارير أوضح (ربح/مبيعات حسب الصنف).
-            </p>
-
-            <h3 class="fr frBlock hide">Classement propre</h3>
-            <p class="fr frBlock hide">
-              Les familles accélèrent la recherche et améliorent les rapports (ventes/bénéfice par catégorie).
-            </p>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="img">
-            <img src="marques.png" alt="Marques">
-            <div class="cap arBlock">العلامات التجارية</div>
-            <div class="cap fr frBlock hide">Marques</div>
-          </div>
-          <div class="body">
-            <h3 class="arBlock">تحليل أفضل حسب الماركة</h3>
-            <p class="arBlock">
-              مفيد جدًا في الكوسميتيك وقطع الغيار: تعرف أكثر ماركة تبيع وتتحكم في التسعير والطلب.
-            </p>
-
-            <h3 class="fr frBlock hide">Analyse par marque</h3>
-            <p class="fr frBlock hide">
-              Idéal pour cosmétique & pièces: suivre les marques qui vendent le plus et ajuster les prix.
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- SECTION: Etiquettes -->
-    <div class="section">
-      <div class="sectionHead">
-        <div>
-          <h2 class="arBlock">🏷️ اعدادات ملصقات الكودبار و الرفوف</h2>
-          <p class="arBlock">تهيئة سهلة + قوالب متعددة + دعم A4 و ملصقات الكودبار</p>
-
-          <h2 class="fr frBlock hide">🏷️ Codes-barres & étiquettes</h2>
-          <p class="fr frBlock hide">Réglage facile + plusieurs modèles + A4 & rouleau</p>
-        </div>
-        <p class="chip">A4 • Rouleau • Xprinter</p>
-      </div>
-
-      <div class="grid">
-        <div class="card">
-          <div class="img">
-            <img src="etiquettes.png" alt="Réglage étiquettes">
-            <div class="cap arBlock">إعداد المقاسات والقوالب</div>
-            <div class="cap fr frBlock hide">Réglage tailles/modèles</div>
-          </div>
-          <div class="body">
-            <h3 class="arBlock">اختيار المقاس المناسب لمطبعتك</h3>
-            <p class="arBlock">
-              اختر A4 أو ملصقات الكودبار(20×40 / 35×45…)، وحدد شكل الإتيكيت: عنوان + باركود + سعر…
-              لتطبع بسرعة وبشكل مرتب.
-            </p>
-
-            <h3 class="fr frBlock hide">Choisissez le bon format</h3>
-            <p class="fr frBlock hide">
-              A4 ou rouleau (20×40 / 35×45…), avec modèles: entête + CB + prix…
-              pour une impression rapide et propre.
-            </p>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="img">
-            <img src="impression_etq.png" alt="Aperçu impression">
-            <div class="cap arBlock">معاينة قبل الطباعة</div>
-            <div class="cap fr frBlock hide">Aperçu avant impression</div>
-          </div>
-          <div class="body">
-            <h3 class="arBlock">تتأكد قبل ما تضيع الورق</h3>
-            <p class="arBlock">
-              معاينة واضحة للإتيكيت (الاسم/السعر) قبل الطباعة،
-              لتتجنب أخطاء المقاس أو التنسيق.
-            </p>
-
-            <h3 class="fr frBlock hide">Validation avant impression</h3>
-            <p class="fr frBlock hide">
-              Aperçu clair avant impression pour éviter les erreurs de taille ou mise en page.
-            </p>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="img">
-            <img src="im_cb.png" alt="Impression code-barres" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=&quot;placeholder&quot;>ضع صورة طباعة الباركود (اختياري)</div>'; ">
-            <div class="cap arBlock">طباعة ملصقات الرفوف</div>
-            <div class="cap fr frBlock hide">Impression CB directe</div>
-          </div>
-          <div class="body">
-            <h3 class="arBlock">تحديث أوتوماتيكي لملصقات الرفوف</h3>
-            <p class="arBlock">
-              طباعة عدد الإتيكيتات المطلوبة مباشرة،
-              خيار مثالي لتحديث الرفوف بسرعة.
-            </p>
-
-            <h3 class="fr frBlock hide">Rapide en rayon</h3>
-            <p class="fr frBlock hide">
-              Imprimer rapidement le nombre d’étiquettes nécessaire, idéal pour la mise à jour des rayons.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <!-- SECTION: Analyses avancées -->
-      <div class="section">
-        <div class="sectionHead">
-          <div>
-            <h2 class="arBlock">📊 تحليلات وتنبيهات متقدمة</h2>
-            <p class="arBlock">قرارات ذكية مبنية على حركة البيع والمخزون</p>
-
-            <h2 class="fr frBlock hide">📊 Analyses & alertes avancées</h2>
-            <p class="fr frBlock hide">Décisions intelligentes basées sur ventes & stock</p>
-          </div>
-          <p class="chip">Analyse • Alerte • Décision</p>
-        </div>
-
-        <div class="grid">
-          <div class="card">
-            <div class="img">
-              <img src="opportunite_perdu.png" alt="Opportunités perdues">
-              <div class="cap arBlock">فرص بيع ضائعة</div>
-              <div class="cap fr frBlock hide">Opportunités perdues</div>
-            </div>
-            <div class="body">
-              <h3 class="arBlock">منتجات مطلوبة لكن غير متوفرة</h3>
-              <p class="arBlock">
-                يعرض ProBMS السلع التي حققت <b>مبيعات قوية خلال آخر 12 شهرًا</b>
-                وفي نفس الوقت مخزونها <b>منعدم أو قريب من النفاد</b>.
-                <br>👉 هذه هي السلع التي تضيع عليك أرباحًا حقيقية.
-              </p>
-
-              <h3 class="fr frBlock hide">Produits à forte demande</h3>
-              <p class="fr frBlock hide">
-                ProBMS détecte les produits à <b>forte vente sur les 12 derniers mois</b>
-                avec un stock <b>critique ou nul</b>.
-                <br>👉 De vraies ventes perdues à récupérer.
-              </p>
-
-              <div class="tags">
-                <span class="tag">12 mois</span>
-                <span class="tag">Stock critique</span>
-                <span class="tag">Décision achat</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="card">
-            <div class="img">
-              <img src="controle_prix_stock.png" alt="Contrôle prix stock">
-              <div class="cap arBlock">أخطاء الأسعار</div>
-              <div class="cap fr frBlock hide">Erreurs de prix</div>
-            </div>
-            <div class="body">
-              <h3 class="arBlock">كشف تلقائي لأخطاء التسعير</h3>
-              <p class="arBlock">
-                قائمة خاصة تُظهر السلع التي تحتوي على:
-                سعر بيع غير منطقي، سعر أقل من الشراء،
-                أو اختلاف بين التفصيل/الجملة/الخاص.
-                <br>👉 تصحيح الأخطاء قبل أن تتحول إلى خسائر.
-              </p>
-
-              <h3 class="fr frBlock hide">Détection des erreurs</h3>
-              <p class="fr frBlock hide">
-                Liste dédiée pour repérer:
-                prix incohérents, vente inférieure à l’achat,
-                ou écarts entre détail/gros/spécial.
-                <br>👉 Corriger avant la perte.
-              </p>
-
-              <div class="tags">
-                <span class="tag">Sécurité</span>
-                <span class="tag">Marge</span>
-                <span class="tag">Contrôle</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="card">
-            <div class="img">
-              <img src="peremption.png" alt="Péremption">
-              <div class="cap arBlock">تاريخ نهاية الصلاحية</div>
-              <div class="cap fr frBlock hide">Péremption</div>
-            </div>
-            <div class="body">
-              <h3 class="arBlock">تنبيه السلع منتهية أو قريبة الانتهاء</h3>
-              <p class="arBlock">
-                متابعة ذكية لتواريخ الصلاحية:
-                السلع المنتهية، القريبة من الانتهاء،
-                والكميات المتبقية.
-                <br>👉 تفادي الخسائر واحترام الجودة.
-              </p>
-
-              <h3 class="fr frBlock hide">Produits périmés</h3>
-              <p class="fr frBlock hide">
-                Suivi des dates de péremption : produits expirés, proches de l’expiration et quantités restantes.
-                <br>👉 Moins de pertes, plus de qualité.
-              </p>
-
-              <div class="tags">
-                <span class="tag">Date</span>
-                <span class="tag">Alerte</span>
-                <span class="tag">Qualité</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-
-
-
-<!-- SECTION: Articles Dormants -->
-<div class="section">
-  <div class="sectionHead">
-    <div>
-      <h2 class="arBlock">😴 السلع النائمة (Articles Dormants)</h2>
-      <p class="arBlock">
-        سلع لم تُبع خلال مدة زمنية محددة (12 شهر أو حسب اختيارك)
-      </p>
-
-      <h2 class="fr frBlock hide">😴 Articles dormants</h2>
-      <p class="fr frBlock hide">
-        Produits non vendus durant une période définie (12 mois ou personnalisée)
-      </p>
-    </div>
-    <p class="chip">12 mois • Analyse • Décision</p>
-  </div>
-
-  <div class="grid">
-
-    <!-- CARD 1 -->
-    <div class="card">
-      <div class="img">
-        <img src="dormants.png" alt="Articles dormants ProBMS">
-        <div class="cap arBlock">قائمة السلع النائمة</div>
-        <div class="cap fr frBlock hide">Liste des articles dormants</div>
-      </div>
-      <div class="body">
-        <h3 class="arBlock">كشف تلقائي للسلع الراكدة</h3>
-        <p class="arBlock">
-          يعرض ProBMS تلقائيًا السلع التي لم تسجل أي عملية بيع
-          خلال فترة تختارها بنفسك
-          (مثلاً: آخر 12 شهرًا).
-        </p>
-
-        <h3 class="fr frBlock hide">Détection automatique</h3>
-        <p class="fr frBlock hide">
-          ProBMS affiche automatiquement les articles
-          sans aucune vente sur une période choisie
-          (ex: 12 derniers mois).
-        </p>
-
-        <div class="tags">
-          <span class="tag">Automatique</span>
-          <span class="tag">Filtrage</span>
-          <span class="tag">Historique</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- CARD 2 -->
-    <div class="card">
-      <div class="img">
-        <img src="dormants_action.png" alt="Actions articles dormants">
-        <div class="cap arBlock">قرارات عملية</div>
-        <div class="cap fr frBlock hide">Actions recommandées</div>
-      </div>
-      <div class="body">
-        <h3 class="arBlock">ماذا تفعل بالسلع النائمة؟</h3>
-        <p class="arBlock">
-          بعد اكتشاف السلع الراكدة، يمكنك:
-          <br>• تخفيض السعر
-          <br>• إطلاق عرض ترويجي
-          <br>• تصفية المخزون
-          <br>• إيقاف إعادة الشراء
-        </p>
-
-        <h3 class="fr frBlock hide">Que faire ?</h3>
-        <p class="fr frBlock hide">
-          Une fois détectés, vous pouvez :
-          <br>• Baisser le prix
-          <br>• Lancer une promotion
-          <br>• Déstocker
-          <br>• Stopper le réapprovisionnement
-        </p>
-
-        <div class="tags">
-          <span class="tag">Promotion</span>
-          <span class="tag">Déstockage</span>
-          <span class="tag">Optimisation</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- CARD 3 -->
-    <div class="card">
-      <div class="img">
-        <img src="dormants_period.png" alt="Période articles dormants">
-        <div class="cap arBlock">فترة مرنة</div>
-        <div class="cap fr frBlock hide">Période flexible</div>
-      </div>
-      <div class="body">
-        <h3 class="arBlock">المدة تحت تحكمك</h3>
-        <p class="arBlock">
-          لست مجبرًا على 12 شهرًا فقط.
-          يمكنك تحديد:
-          <br>• 3 أشهر
-          <br>• 6 أشهر
-          <br>• سنة كاملة
-          <br>حسب طبيعة نشاطك.
-        </p>
-
-        <h3 class="fr frBlock hide">Période personnalisable</h3>
-        <p class="fr frBlock hide">
-          La période est libre :
-          <br>• 3 mois
-          <br>• 6 mois
-          <br>• 12 mois
-          <br>selon votre activité.
-        </p>
-
-        <div class="tags">
-          <span class="tag">Flexible</span>
-          <span class="tag">Adaptable</span>
-          <span class="tag">Contrôle</span>
-        </div>
-      </div>
-    </div>
-
+  <div class="footer">
+    www.bmsoftdev.com • ProBMS • 06.62.54.14.86 / 07.76.07.77.94
   </div>
 </div>
 
+<script>
+/* 3D Glow follow mouse (creative but light) */
+document.querySelectorAll('[data-tilt]').forEach(card=>{
+  card.addEventListener('mousemove', (e)=>{
+    const r = card.getBoundingClientRect();
+    const x = e.clientX - r.left;
+    const y = e.clientY - r.top;
 
+    const rx = ((y / r.height) - 0.5) * -6;
+    const ry = ((x / r.width) - 0.5) * 6;
 
+    card.style.setProperty('--x', `${(x/r.width)*100}%`);
+    card.style.setProperty('--y', `${(y/r.height)*100}%`);
+    card.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-2px)`;
+  });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  <div class="foot">
-  <a href="https://www.bmsoftdev.com/" target="_blank" rel="noopener">
-    www.bmsoftdev.com
-  </a>
-  • ProBMS — Module Stock •
-
-  <a href="tel:+213662541486">06.62.54.14.86</a>
-  (
-    <a href="https://wa.me/213662541486" target="_blank" rel="noopener">WhatsApp</a>
-  )
-  /
-
-  <a href="tel:+213776077794">07.76.07.77.94</a>
-  (
-    <a href="https://wa.me/213776077794" target="_blank" rel="noopener">WhatsApp</a>
-  )
-</div>
-
-
-    </div>
-  </div>
-
-  <!-- Lightbox -->
-  <div class="lightbox" id="lightbox">
-    <span class="close" id="lbClose">✕</span>
-    <img id="lbImg" src="" alt="Zoom">
-  </div>
-
-  <script>
-    // ===== Language Switch =====
-    const arBlocks = document.querySelectorAll('.arBlock');
-    const frBlocks = document.querySelectorAll('.frBlock');
-    const btnAr = document.getElementById('btnAr');
-    const btnFr = document.getElementById('btnFr');
-
-    function showAR(){
-      arBlocks.forEach(x => x.classList.remove('hide'));
-      frBlocks.forEach(x => x.classList.add('hide'));
-      document.documentElement.lang = 'ar';
-      document.documentElement.dir = 'rtl';
-    }
-    function showFR(){
-      arBlocks.forEach(x => x.classList.add('hide'));
-      frBlocks.forEach(x => x.classList.remove('hide'));
-      document.documentElement.lang = 'fr';
-      document.documentElement.dir = 'ltr';
-    }
-    btnAr.addEventListener('click', showAR);
-    btnFr.addEventListener('click', showFR);
-    showAR();
-
-    // ===== IMAGE LIGHTBOX (Zoom) =====
-    const lightbox = document.getElementById('lightbox');
-    const lbImg = document.getElementById('lbImg');
-    const lbClose = document.getElementById('lbClose');
-
-    function openLightbox(src){
-      lbImg.src = src;
-      lightbox.classList.add('active');
-    }
-    function closeLightbox(){
-      lightbox.classList.remove('active');
-      lbImg.src = '';
-    }
-
-    document.querySelectorAll('.card .img img').forEach(img=>{
-      img.addEventListener('click', ()=>{
-        if(!img.src) return;
-        openLightbox(img.src);
-      });
-    });
-
-    lbClose.addEventListener('click', closeLightbox);
-
-    lightbox.addEventListener('click', (e)=>{
-      if(e.target === lightbox) closeLightbox();
-    });
-
-    document.addEventListener('keydown', (e)=>{
-      if(e.key === 'Escape') closeLightbox();
-    });
-  </script>
+  card.addEventListener('mouseleave', ()=>{
+    card.style.transform = 'none';
+    card.style.setProperty('--x', `50%`);
+    card.style.setProperty('--y', `20%`);
+  });
+});
+</script>
 </body>
 </html>

@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>ProBMS | المشتريات</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg1:#070517;
+  --bg2:#120a2a;
+  --card:#0e0a1f;
+  --stroke:rgba(255,255,255,.08);
+  --text:#f1f5f9;
+  --muted:rgba(241,245,249,.7);
+  --mauve:#b55cff;
+  --mauve2:#7c3aed;
+  --shadow:0 25px 60px rgba(0,0,0,.55);
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:'Cairo',Tahoma,Arial;
+  background:
+    radial-gradient(900px 500px at 15% 10%, rgba(181,92,255,.25), transparent 60%),
+    linear-gradient(135deg,var(--bg1),var(--bg2));
+  color:var(--text);
+}
+
+/* ===== Header ===== */
+.header{
+  padding:18px 22px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+.logo{
+  width:44px;height:44px;
+  border-radius:12px;
+  background:linear-gradient(135deg,var(--mauve),var(--mauve2));
+  display:grid;place-items:center;
+  font-weight:900;
+}
+.lang button{
+  background:transparent;
+  color:#fff;
+  border:1px solid var(--stroke);
+  border-radius:10px;
+  padding:6px 12px;
+  cursor:pointer;
+}
+
+/* ===== Sections ===== */
+.section{
+  max-width:1200px;
+  margin:24px auto;
+  padding:0 16px;
+}
+.sectionHead{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:14px;
+}
+.sectionHead h2{
+  margin:0;
+  font-size:26px;
+}
+.sectionHead p{margin:4px 0 0;color:var(--muted)}
+.chip{
+  padding:6px 14px;
+  border-radius:999px;
+  background:rgba(181,92,255,.15);
+  color:#e9d5ff;
+  border:1px solid rgba(181,92,255,.35);
+}
+
+/* ===== Cards ===== */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+  gap:18px;
+}
+.card{
+  background:var(--card);
+  border:1px solid var(--stroke);
+  border-radius:20px;
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+.card .img{position:relative}
+.card img{
+  width:100%;
+  height:190px;
+  object-fit:cover;
+}
+.cap{
+  position:absolute;
+  bottom:10px;
+  right:10px;
+  background:rgba(0,0,0,.6);
+  padding:6px 12px;
+  border-radius:999px;
+  font-size:13px;
+}
+.body{padding:16px}
+.body h3{margin:0 0 8px}
+.body p{margin:0;color:var(--muted);line-height:1.7}
+
+/* ===== Footer ===== */
+.foot{
+  margin-top:40px;
+  padding:18px;
+  text-align:center;
+  color:var(--muted);
+  border-top:1px solid var(--stroke);
+}
+.foot a{
+  color:#c4b5fd;
+  text-decoration:none;
+}
+.foot a:hover{text-decoration:underline}
+
+/* ===== Lang ===== */
+.fr{direction:ltr;font-family:Segoe UI,Tahoma}
+.hide{display:none}
+</style>
+
+<script>
+function setLang(l){
+  document.querySelectorAll('.arBlock').forEach(e=>e.classList.toggle('hide',l==='fr'));
+  document.querySelectorAll('.frBlock').forEach(e=>e.classList.toggle('hide',l==='ar'));
+}
+</script>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="brand">
+    <div class="logo">BM</div>
+    <div>
+      <strong>BM Soft • ProBMS</strong><br>
+      <small class="arBlock">وحدة المشتريات</small>
+      <small class="fr frBlock hide">Module Achats</small>
+    </div>
+  </div>
+  <div class="lang">
+    <button onclick="setLang('ar')">AR</button>
+    <button onclick="setLang('fr')">FR</button>
+  </div>
+</div>
+
+<!-- FOURNISSEURS -->
+<div class="section">
+  <div class="sectionHead">
+    <div>
+      <h2 class="arBlock">🏭 تسيير الممونين</h2>
+      <p class="arBlock">بطاقات، ديون، تسديدات</p>
+
+      <h2 class="fr frBlock hide">🏭 Gestion des fournisseurs</h2>
+      <p class="fr frBlock hide">Fiches, dettes, versements</p>
+    </div>
+    <span class="chip">Fournisseurs</span>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <div class="img">
+        <img src="fournisseur.png" loading="lazy">
+        <div class="cap arBlock">بطاقة ممون</div>
+        <div class="cap fr frBlock hide">Fiche fournisseur</div>
+      </div>
+      <div class="body">
+        <h3 class="arBlock">معلومات كاملة</h3>
+        <p class="arBlock">الاسم، العنوان، الهاتف، الرصيد، الديون.</p>
+
+        <h3 class="fr frBlock hide">Infos complètes</h3>
+        <p class="fr frBlock hide">Coordonnées, solde, dettes.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="img">
+        <img src="versement_fournisseur.png" loading="lazy">
+        <div class="cap arBlock">تسديدات</div>
+        <div class="cap fr frBlock hide">Versements</div>
+      </div>
+      <div class="body">
+        <h3 class="arBlock">متابعة الديون</h3>
+        <p class="arBlock">تسجيل تسديد، وصل A4، رصيد محدث.</p>
+
+        <h3 class="fr frBlock hide">Suivi dettes</h3>
+        <p class="fr frBlock hide">Versements et reçus.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ACHATS -->
+<div class="section">
+  <div class="sectionHead">
+    <div>
+      <h2 class="arBlock">🛒 المشتريات</h2>
+      <p class="arBlock">إدخال Bon d’Achat للمخزون</p>
+
+      <h2 class="fr frBlock hide">🛒 Achats</h2>
+      <p class="fr frBlock hide">Saisie des bons d’achat</p>
+    </div>
+    <span class="chip">Achats</span>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <div class="img">
+        <img src="gestion_achat.png" loading="lazy">
+        <div class="cap arBlock">إدخال المشتريات</div>
+        <div class="cap fr frBlock hide">Saisie achats</div>
+      </div>
+      <div class="body">
+        <h3 class="arBlock">إدخال سريع</h3>
+        <p class="arBlock">أسعار شراء، كميات، تحديث المخزون.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="img">
+        <img src="bon_achat.png" loading="lazy">
+        <div class="cap arBlock">Bon d’Achat</div>
+        <div class="cap fr frBlock hide">Bon d’achat</div>
+      </div>
+      <div class="body">
+        <h3 class="arBlock">طباعة احترافية</h3>
+        <p class="arBlock">A4 – مجموع، مدفوع، متبقي.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- JOURNAL -->
+<div class="section">
+  <div class="sectionHead">
+    <div>
+      <h2 class="arBlock">📊 جدول المشتريات</h2>
+      <p class="arBlock">تحليل حسب الممون والسلعة</p>
+
+      <h2 class="fr frBlock hide">📊 Journal des achats</h2>
+      <p class="fr frBlock hide">Analyse détaillée</p>
+    </div>
+    <span class="chip">Journal</span>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <div class="img">
+        <img src="journal_achat.png" loading="lazy">
+        <div class="cap arBlock">Journal المشتريات</div>
+        <div class="cap fr frBlock hide">Journal achats</div>
+      </div>
+      <div class="body">
+        <h3 class="arBlock">إجماليات دقيقة</h3>
+        <p class="arBlock">مجموع الشراء ومتوسط السعر.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="img">
+        <img src="historique_achat_article.png" loading="lazy">
+        <div class="cap arBlock">تاريخ سلعة</div>
+        <div class="cap fr frBlock hide">Historique article</div>
+      </div>
+      <div class="body">
+        <h3 class="arBlock">تتبع زمني</h3>
+        <p class="arBlock">كل عمليات الشراء حسب التاريخ.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- COMMANDES -->
+<div class="section">
+  <div class="sectionHead">
+    <div>
+      <h2 class="arBlock">📝 طلبات الشراء</h2>
+      <p class="arBlock">تحضير الطلب قبل الاستلام</p>
+
+      <h2 class="fr frBlock hide">📝 Bons de commande</h2>
+      <p class="fr frBlock hide">Préparation des commandes</p>
+    </div>
+    <span class="chip">Commande</span>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <div class="img">
+        <img src="bon_commande.png" loading="lazy">
+        <div class="cap arBlock">Bon de Commande</div>
+        <div class="cap fr frBlock hide">Bon de commande</div>
+      </div>
+      <div class="body">
+        <h3 class="arBlock">تنظيم ذكي</h3>
+        <p class="arBlock">تحويل الطلب مباشرة إلى شراء.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="foot">
+  <a href="https://www.bmsoftdev.com" target="_blank">www.bmsoftdev.com</a>
+  • ProBMS — Module Achats • 06.62.54.14.86 / 07.76.07.77.94
+</div>
+
+</body>
+</html>
