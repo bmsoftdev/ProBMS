@@ -1,697 +1,882 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ProBMS | الزبائن والمبيعات والفوترة</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ProBMS | الزبائن والمبيعات والفوترة</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
 
-  <style>
-    :root{
-      --bg1:#050414;
-      --bg2:#120a2a;
+<style>
+:root{
+  --bg1:#050414;
+  --bg2:#120a2a;
 
-      --glass:rgba(14,10,31,.62);
-      --glass2:rgba(255,255,255,.06);
+  --glass:rgba(14,10,31,.65);
+  --stroke:rgba(255,255,255,.12);
 
-      --stroke:rgba(255,255,255,.12);
-      --text:#f1f5f9;
-      --muted:rgba(241,245,249,.72);
+  --text:#f1f5f9;
+  --muted:rgba(241,245,249,.72);
 
-      --mauve:#b55cff;
-      --mauve2:#7c3aed;
+  --mauve:#b55cff;
+  --mauve2:#7c3aed;
 
-      --shadow:0 30px 80px rgba(0,0,0,.62);
-      --shadow2:0 18px 50px rgba(0,0,0,.45);
+  --shadow:0 30px 80px rgba(0,0,0,.6);
+  --shadow2:0 18px 50px rgba(0,0,0,.45);
 
-      --radius:22px;
-      --radius2:18px;
-    }
+  --radius:22px;
+  --radius2:18px;
+}
 
-    *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
-    body{
-      margin:0;
-      font-family:'Cairo',Tahoma,Arial,sans-serif;
-      color:var(--text);
-      background:
-        radial-gradient(900px 520px at 12% 10%, rgba(181,92,255,.30), transparent 60%),
-        radial-gradient(700px 420px at 88% 20%, rgba(124,58,237,.18), transparent 60%),
-        linear-gradient(135deg,var(--bg1),var(--bg2));
-      min-height:100vh;
-    }
-    a{color:inherit;text-decoration:none}
-    .wrap{max-width:1180px;margin:0 auto;padding:16px 14px 40px}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family:'Cairo',Tahoma,Arial,sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(900px 520px at 12% 10%, rgba(181,92,255,.30), transparent 60%),
+    radial-gradient(700px 420px at 88% 20%, rgba(124,58,237,.18), transparent 60%),
+    linear-gradient(135deg,var(--bg1),var(--bg2));
+  min-height:100vh;
+}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1180px;margin:0 auto;padding:16px 14px 40px}
 
-    /* ======= TOP GLASS BAR (مثل الصورة) ======= */
-    .topbar{
-      margin:10px 0 18px;
-      padding:18px 20px;
-      border-radius:26px;
-      background:linear-gradient(180deg, rgba(255,255,255,.09), rgba(255,255,255,.03));
-      border:1px solid var(--stroke);
-      box-shadow:var(--shadow);
-      backdrop-filter: blur(12px);
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:14px;
-    }
-    .topLeft{
-      display:flex;align-items:center;gap:12px;flex-wrap:wrap;
-    }
-    .homeBtn{
-      display:inline-flex;align-items:center;gap:10px;
-      padding:10px 14px;
-      border-radius:999px;
-      border:1px solid rgba(181,92,255,.35);
-      background:linear-gradient(135deg, rgba(181,92,255,.26), rgba(124,58,237,.18));
-      font-weight:900;
-      box-shadow:0 12px 30px rgba(0,0,0,.25);
-      transition:.25s;
-      user-select:none;
-    }
-    .homeBtn:hover{transform:translateY(-2px)}
-    .langPills{
-      display:inline-flex;align-items:center;gap:8px;
-      padding:6px;
-      border-radius:999px;
-      border:1px solid var(--stroke);
-      background:rgba(0,0,0,.18);
-    }
-    .pill{
-      padding:8px 12px;
-      border-radius:999px;
-      border:1px solid transparent;
-      cursor:pointer;
-      font-weight:900;
-      font-size:13px;
-      background:transparent;
-      color:var(--text);
-      transition:.2s;
-      user-select:none;
-    }
-    .pill.active{
-      background:linear-gradient(135deg,var(--mauve),var(--mauve2));
-      border-color:rgba(255,255,255,.12);
-    }
+/* ===== TOP GLASS BAR ===== */
+.topbar{
+  margin:10px 0 18px;
+  padding:18px 20px;
+  border-radius:26px;
+  background:rgba(14,10,31,.75);
+  border:1px solid var(--stroke);
+  box-shadow:var(--shadow);
+  backdrop-filter: blur(12px);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+}
+.topLeft{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.btn{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:10px 14px;
+  border-radius:999px;
+  border:1px solid rgba(181,92,255,.35);
+  background:linear-gradient(135deg, rgba(181,92,255,.26), rgba(124,58,237,.18));
+  font-weight:900;
+  box-shadow:0 12px 30px rgba(0,0,0,.25);
+  transition:.25s;
+  user-select:none;
+}
+.btn:hover{transform:translateY(-2px)}
+.btn.whats{
+  border-color:rgba(34,197,94,.35);
+  background:linear-gradient(135deg, rgba(34,197,94,.20), rgba(181,92,255,.12));
+}
+.langPills{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:6px;
+  border-radius:999px;
+  border:1px solid var(--stroke);
+  background:rgba(0,0,0,.18);
+}
+.pill{
+  padding:8px 12px;
+  border-radius:999px;
+  border:1px solid transparent;
+  cursor:pointer;
+  font-weight:900;
+  font-size:13px;
+  background:transparent;
+  color:var(--text);
+  transition:.2s;
+  user-select:none;
+}
+.pill.active{
+  background:linear-gradient(135deg,var(--mauve),var(--mauve2));
+  border-color:rgba(255,255,255,.12);
+}
+.topRight{display:flex;align-items:center;gap:14px}
+.brandText{text-align:right;line-height:1.45}
+.brandText b{display:block;font-size:15px}
+.brandText small{color:var(--muted);font-weight:700}
+.brandText .crumb{color:rgba(241,245,249,.55);font-size:12px}
+.bmIcon{
+  width:46px;height:46px;border-radius:16px;
+  background:linear-gradient(135deg,var(--mauve),var(--mauve2));
+  display:grid;place-items:center;
+  font-weight:1000;
+  box-shadow:0 18px 40px rgba(0,0,0,.35);
+  flex:0 0 auto;
+}
 
-    .topRight{
-      display:flex;align-items:center;gap:14px;
-    }
-    .brandText{
-      text-align:right;
-      line-height:1.45;
-    }
-    .brandText b{display:block;font-size:15px}
-    .brandText small{color:var(--muted);font-weight:700}
-    .brandText .crumb{color:rgba(241,245,249,.55);font-size:12px}
+/* ===== HERO (مثل الصورة الأولى) ===== */
+.hero{
+  display:grid;
+  grid-template-columns: 420px 1fr;
+  gap:18px;
+  align-items:stretch;
+  margin-bottom:22px;
+}
+@media(max-width:1000px){.hero{grid-template-columns:1fr}}
+.heroImg{
+  border-radius:var(--radius);
+  border:1px solid var(--stroke);
+  background:var(--glass);
+  box-shadow:var(--shadow2);
+  overflow:hidden;
+}
+.heroImg img{
+  width:100%;
+  height:100%;
+  min-height:300px;
+  object-fit:cover;
+  display:block;
+}
+.heroBig{
+  border-radius:var(--radius);
+  border:1px solid var(--stroke);
+  background:linear-gradient(135deg, rgba(181,92,255,.14), rgba(124,58,237,.06));
+  box-shadow:var(--shadow2);
+  padding:22px 22px 18px;
+  position:relative;
+  overflow:hidden;
+  backdrop-filter: blur(10px);
+}
+.heroBig:before{
+  content:"";
+  position:absolute;inset:-2px;
+  background:
+    radial-gradient(520px 240px at 70% 30%, rgba(181,92,255,.26), transparent 60%),
+    radial-gradient(420px 220px at 20% 0%, rgba(124,58,237,.18), transparent 60%);
+  pointer-events:none;
+}
+.heroBig h1{margin:0 0 10px;font-size:38px;position:relative}
+.heroBig p{margin:0;color:var(--muted);line-height:1.9;font-weight:700;position:relative}
 
-    .bmIcon{
-      width:46px;height:46px;border-radius:16px;
-      background:linear-gradient(135deg,var(--mauve),var(--mauve2));
-      display:grid;place-items:center;
-      font-weight:1000;
-      box-shadow:0 18px 40px rgba(0,0,0,.35);
-      flex:0 0 auto;
-    }
+.features{
+  margin-top:16px;
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:14px;
+  position:relative;
+}
+@media(max-width:650px){.features{grid-template-columns:1fr}}
+.feature{
+  padding:14px 16px;
+  border-radius:18px;
+  border:1px solid rgba(181,92,255,.35);
+  background:rgba(14,10,31,.55);
+}
+.feature b{display:block;margin-bottom:6px}
+.feature span{color:var(--muted);font-size:13px;line-height:1.7}
 
-    /* ======= HERO ROW (تنقل سريع + Hero) ======= */
-    .heroRow{
-      display:grid;
-      grid-template-columns: 440px 1fr;
-      gap:18px;
-      align-items:stretch;
-    }
-    @media(max-width:1000px){
-      .heroRow{grid-template-columns:1fr}
-    }
+/* ===== SECTION HEAD ===== */
+.secTitle{
+  margin:26px 0 12px;
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:12px;
+}
 
-    .quickNav{
-      border-radius:var(--radius);
-      border:1px solid var(--stroke);
-      background:rgba(14,10,31,.55);
-      box-shadow:var(--shadow2);
-      overflow:hidden;
-      padding:18px;
-      position:relative;
-      backdrop-filter: blur(10px);
-    }
-    .quickNav:before{
-      content:"";
-      position:absolute;inset:-2px;
-      background:radial-gradient(400px 200px at 30% 10%, rgba(181,92,255,.18), transparent 60%);
-      pointer-events:none;
-    }
-    .quickHead{
-      display:flex;align-items:center;justify-content:space-between;gap:10px;
-      margin-bottom:14px;
-      position:relative;
-    }
-    .quickHead b{font-size:18px}
-    .quickHead span{
-      color:var(--muted);
-      font-weight:800;
-      font-size:13px;
-    }
-    .quickBtns{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:12px;
-      position:relative;
-    }
-    .qbtn{
-      border-radius:999px;
-      padding:12px 14px;
-      border:1px solid rgba(181,92,255,.25);
-      background:rgba(255,255,255,.05);
-      display:flex;align-items:center;justify-content:space-between;
-      gap:10px;
-      font-weight:900;
-      transition:.25s;
-      user-select:none;
-    }
-    .qbtn:hover{
-      transform:translateY(-2px);
-      background:rgba(255,255,255,.08);
-      border-color:rgba(181,92,255,.45);
-    }
-    .qbtn em{font-style:normal;color:var(--muted);font-weight:800;font-size:12px}
 
-    .heroBig{
-      border-radius:var(--radius);
-      border:1px solid var(--stroke);
-      background:linear-gradient(135deg, rgba(181,92,255,.14), rgba(124,58,237,.06));
-      box-shadow:var(--shadow2);
-      padding:22px 22px 18px;
-      position:relative;
-      overflow:hidden;
-      backdrop-filter: blur(10px);
-    }
-    .heroBig:before{
-      content:"";
-      position:absolute;inset:-2px;
-      background:
-        radial-gradient(520px 240px at 70% 30%, rgba(181,92,255,.26), transparent 60%),
-        radial-gradient(420px 220px at 20% 0%, rgba(124,58,237,.18), transparent 60%);
-      pointer-events:none;
-    }
-    .heroBig h1{
-      margin:0 0 10px;
-      font-size:40px;
-      letter-spacing:.2px;
-      position:relative;
-    }
-    .heroBig p{
-      margin:0;
-      color:var(--muted);
-      line-height:1.9;
-      font-weight:700;
-      position:relative;
-    }
-    .heroMeta{
-      margin-top:12px;
-      display:flex;gap:10px;flex-wrap:wrap;
-      position:relative;
-    }
-    .chip{
-      padding:8px 12px;
-      border-radius:999px;
-      border:1px solid var(--stroke);
-      background:rgba(0,0,0,.18);
-      color:rgba(241,245,249,.85);
-      font-weight:800;
-      font-size:12px;
-    }
+<!-- .secTitle h2{margin:0;font-size:28px}
+.secTitle .sub{
+  color:var(--muted);
+  font-weight:700;
+  margin-top:6px;
+  line-height:1.8;
+  font-size:14px;
+} -->
+.secTitle .leftTag{
+  padding:10px 14px;
+  border-radius:999px;
+  border:1px solid rgba(181,92,255,.35);
+  background:rgba(181,92,255,.10);
+  color:#e9d5ff;
+  font-weight:900;
+  font-size:13px;
+  white-space:nowrap;
+}
 
-    /* ======= SECTION HEAD (مثل الصورة) ======= */
-    .secTitle{
-      margin:26px 0 12px;
-      display:flex;
-      align-items:flex-end;
-      justify-content:space-between;
-      gap:12px;
-    }
-    .secTitle h2{
-      margin:0;
-      font-size:28px;
-    }
-    .secTitle .sub{
-      color:var(--muted);
-      font-weight:700;
-      margin-top:6px;
-      line-height:1.8;
-      font-size:14px;
-    }
-    .secTitle .leftTag{
-      padding:10px 14px;
-      border-radius:999px;
-      border:1px solid rgba(181,92,255,.35);
-      background:rgba(181,92,255,.10);
-      color:#e9d5ff;
-      font-weight:900;
-      font-size:13px;
-      white-space:nowrap;
-    }
 
-    /* ======= CARDS GRID ======= */
-    .grid{
-      display:grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap:18px;
-    }
-    @media(max-width:900px){
-      .grid{grid-template-columns:1fr}
-    }
 
-    .card{
-      border-radius:var(--radius);
-      border:1px solid var(--stroke);
-      background:rgba(14,10,31,.55);
-      box-shadow:var(--shadow2);
-      overflow:hidden;
-      backdrop-filter: blur(10px);
-    }
+/* ======= SECTION HEAD (مصغر مثل الصورة 2) ======= */
+.secTitle h2{
+  margin:0;
+  font-size:22px;      /* ⬅️ كان 28 */
+  font-weight:800;
+  letter-spacing:.2px;
+}
 
-    .shot{
-      position:relative;
-      background:rgba(0,0,0,.18);
-      border-bottom:1px solid var(--stroke);
-      cursor:zoom-in;
-    }
-    .shot img{
-      width:100%;
-      height:260px;
-      object-fit:cover;
-      display:block;
-      transition:transform .35s ease;
-    }
-    .card:hover .shot img{transform:scale(1.02)}
-    .cap{
-      position:absolute;
-      bottom:12px;right:12px;
-      padding:8px 12px;
-      border-radius:999px;
-      background:rgba(0,0,0,.55);
-      border:1px solid rgba(255,255,255,.12);
-      font-size:12px;
-      font-weight:900;
-    }
-    .body{
-      padding:16px 16px 18px;
-    }
-    .body h3{margin:0 0 8px;font-size:20px}
-    .body p{margin:0;color:var(--muted);line-height:1.9;font-weight:700}
-    .pills{
-      margin-top:12px;
-      display:flex;gap:10px;flex-wrap:wrap;
-    }
-    .pillTag{
-      padding:8px 12px;
-      border-radius:999px;
-      border:1px solid rgba(181,92,255,.25);
-      background:rgba(255,255,255,.05);
-      font-size:12px;
-      font-weight:900;
-    }
+.secTitle .sub{
+  color:var(--muted);
+  font-weight:700;
+  margin-top:4px;
+  line-height:1.6;
+  font-size:12.5px;    /* ⬅️ كان 14 */
+}
 
-    /* ======= SMART STICKY NAV (داخل الصفحة) ======= */
-    .smartNav{
-      position:sticky;
-      top:14px;
-      z-index:40;
-      margin:18px 0 0;
-      padding:10px;
-      border-radius:999px;
-      border:1px solid var(--stroke);
-      background:rgba(14,10,31,.72);
-      backdrop-filter: blur(12px);
-      display:flex;
-      gap:10px;
-      justify-content:center;
-      flex-wrap:wrap;
-      box-shadow:0 12px 40px rgba(0,0,0,.25);
-    }
-    .smartNav a{
-      padding:10px 14px;
-      border-radius:999px;
-      border:1px solid rgba(181,92,255,.25);
-      background:rgba(255,255,255,.05);
-      font-weight:900;
-      font-size:13px;
-      transition:.2s;
-      user-select:none;
-    }
-    .smartNav a.active,
-    .smartNav a:hover{
-      background:linear-gradient(135deg,var(--mauve),var(--mauve2));
-      border-color:transparent;
-    }
 
-    /* ======= FOOTER ======= */
-    .foot{
-      margin-top:28px;
-      padding:16px 10px 6px;
-      text-align:center;
-      color:rgba(241,245,249,.55);
-      border-top:1px solid rgba(255,255,255,.08);
-      font-weight:700;
-      line-height:1.9;
-    }
-    .foot a{color:#c4b5fd;text-decoration:none}
-    .foot a:hover{text-decoration:underline}
 
-    /* ======= LANG ======= */
-    .fr{direction:ltr;text-align:left;font-family:Segoe UI, Tahoma, Arial, sans-serif}
-    .hide{display:none!important}
 
-    /* ======= LIGHTBOX (تكبير مضمون) ======= */
-    .lightbox{
-      position:fixed;
-      inset:0;
-      background:rgba(0,0,0,.90);
-      backdrop-filter: blur(6px);
-      display:none;
-      align-items:center;
-      justify-content:center;
-      z-index:9999;
-      padding:18px;
-    }
-    .lightbox.active{display:flex}
-    .lightbox img{
-      max-width:94vw;
-      max-height:90vh;
-      border-radius:18px;
-      box-shadow:0 40px 120px rgba(0,0,0,.9);
-      background:#000;
-      animation:zoomIn .22s ease-out;
-    }
-    .close{
-      position:absolute;
-      top:18px;
-      left:18px;
-      padding:8px 12px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.25);
-      background:rgba(255,255,255,.15);
-      color:#fff;
-      font-size:22px;
-      font-weight:1000;
-      cursor:pointer;
-      user-select:none;
-    }
-    @keyframes zoomIn{
-      from{transform:scale(.9);opacity:0}
-      to{transform:scale(1);opacity:1}
-    }
-  </style>
+
+
+
+
+
+
+
+
+/* ===== CARDS GRID ===== */
+.grid{
+  display:grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap:18px;
+}
+@media(max-width:900px){.grid{grid-template-columns:1fr}}
+
+.card{
+  border-radius:var(--radius);
+  border:1px solid var(--stroke);
+  background:var(--glass);
+  box-shadow:var(--shadow2);
+  overflow:hidden;
+  backdrop-filter: blur(10px);
+}
+.shot{
+  position:relative;
+  background:rgba(0,0,0,.18);
+  border-bottom:1px solid var(--stroke);
+  cursor:zoom-in;
+}
+.shot img{
+  width:100%;
+  height:260px;
+  object-fit:cover;
+  display:block;
+  transition:transform .35s ease;
+}
+.card:hover .shot img{transform:scale(1.02)}
+.cap{
+  position:absolute;
+  bottom:12px;right:12px;
+  padding:8px 12px;
+  border-radius:999px;
+  background:rgba(0,0,0,.55);
+  border:1px solid rgba(255,255,255,.12);
+  font-size:12px;
+  font-weight:900;
+}
+.body{padding:16px 16px 18px}
+.body h3{margin:0 0 8px;font-size:20px}
+.body p{margin:0;color:var(--muted);line-height:1.9;font-weight:700}
+.pills{margin-top:12px;display:flex;gap:10px;flex-wrap:wrap}
+.pillTag{
+  padding:8px 12px;border-radius:999px;
+  border:1px solid rgba(181,92,255,.25);
+  background:rgba(255,255,255,.05);
+  font-size:12px;font-weight:900;
+}
+
+/* ===== FOOTER ===== */
+.foot{
+  margin-top:28px;
+  padding:16px 10px 6px;
+  text-align:center;
+  color:rgba(241,245,249,.55);
+  border-top:1px solid rgba(255,255,255,.08);
+  font-weight:700;
+  line-height:1.9;
+}
+.foot a{color:#c4b5fd}
+.foot a:hover{text-decoration:underline}
+
+/* ===== LANG ===== */
+.fr{direction:ltr;text-align:left;font-family:Segoe UI, Tahoma, Arial, sans-serif}
+.hide{display:none!important}
+
+/* ===== LIGHTBOX ===== */
+.lightbox{
+  position:fixed;inset:0;
+  background:rgba(0,0,0,.90);
+  backdrop-filter: blur(6px);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:9999;
+  padding:18px;
+}
+.lightbox.active{display:flex}
+.lightbox img{
+  max-width:94vw;
+  max-height:90vh;
+  border-radius:18px;
+  box-shadow:0 40px 120px rgba(0,0,0,.9);
+  background:#000;
+  animation:zoomIn .22s ease-out;
+}
+.close{
+  position:absolute;
+  top:18px;left:18px;
+  padding:8px 12px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.25);
+  background:rgba(255,255,255,.15);
+  color:#fff;
+  font-size:22px;
+  font-weight:1000;
+  cursor:pointer;
+  user-select:none;
+  
+  
+  @media(max-width:600px){
+  .secTitle h2{
+    font-size:20px;
+  }
+  .secTitle .sub{
+    font-size:12px;
+  }
+}
+
+
+
+}
+@keyframes zoomIn{from{transform:scale(.9);opacity:0}to{transform:scale(1);opacity:1}}
+</style>
 </head>
 
 <body>
-  <div class="wrap">
+<div class="wrap">
 
-    <!-- TOPBAR -->
-    <div class="topbar">
-      <div class="topLeft">
-        <a class="homeBtn" href="../index.html">🏠 <span class="arBlock">الرجوع للرئيسية</span><span class="fr frBlock hide">Accueil</span></a>
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div class="topLeft">
+      <a class="btn" href="../index.html">🏠 <span class="arBlock">الرجوع للرئيسية</span><span class="fr frBlock hide">Accueil</span></a>
+      <a class="btn whats" href="https://wa.me/213662541486" target="_blank">💬 WhatsApp</a>
 
-        <div class="langPills">
-          <button class="pill" id="btnFr">FR</button>
-          <button class="pill active" id="btnAr">AR</button>
-        </div>
-      </div>
-
-      <div class="topRight">
-        <div class="brandText">
-          <b>BM Soft • ProBMS</b>
-          <small class="arBlock">وحدة الزبائن • المبيعات • الفوترة</small>
-          <small class="fr frBlock hide">Module Clients • Ventes • Facturation</small><br>
-          <span class="crumb arBlock">إدارة الزبائن • البيع • الفواتير • التقارير</span>
-          <span class="crumb fr frBlock hide">Clients • Ventes • Factures • Rapports</span>
-        </div>
-        <div class="bmIcon">BM</div>
+      <div class="langPills">
+        <button class="pill" id="btnFr">FR</button>
+        <button class="pill active" id="btnAr">AR</button>
       </div>
     </div>
 
-    <!-- HERO ROW -->
-    <div class="heroRow">
-
-      <!-- Quick Nav -->
-      <div class="quickNav">
-        <div class="quickHead">
-          <b class="arBlock">⚡ تنقّل سريع</b>
-          <b class="fr frBlock hide">⚡ Accès rapide</b>
-          <span class="arBlock">اختر القسم</span>
-          <span class="fr frBlock hide">Choisir une section</span>
-        </div>
-
-        <div class="quickBtns">
-          <a class="qbtn" href="#secClients"><span class="arBlock">👥 الزبائن</span><span class="fr frBlock hide">👥 Clients</span><em>Fiches • Crédit</em></a>
-          <a class="qbtn" href="#secVentes"><span class="arBlock">🛒 المبيعات</span><span class="fr frBlock hide">🛒 Ventes</span><em>Comptoir • Crédit</em></a>
-          <a class="qbtn" href="#secFact"><span class="arBlock">🧾 الفوترة</span><span class="fr frBlock hide">🧾 Facturation</span><em>A4 • TVA</em></a>
-          <a class="qbtn" href="#secRap"><span class="arBlock">📊 التقارير</span><span class="fr frBlock hide">📊 Rapports</span><em>Journal • Analyse</em></a>
-        </div>
+    <div class="topRight">
+      <div class="brandText">
+        <b>BM Soft • ProBMS</b>
+        <small class="arBlock">وحدة الزبائن • المبيعات • الفوترة</small>
+        <small class="fr frBlock hide">Module Clients • Ventes • Facturation</small><br>
+        <span class="crumb arBlock">إدارة الزبائن • البيع • الفواتير • التقارير</span>
+        <span class="crumb fr frBlock hide">Clients • Ventes • Factures • Rapports</span>
       </div>
-
-      <!-- Hero Big -->
-      <div class="heroBig">
-        <h1 class="arBlock">🧾 تسيير الزبائن والمبيعات باحتراف</h1>
-        <h1 class="fr frBlock hide">🧾 Clients & Ventes — Niveau Pro</h1>
-
-        <p class="arBlock">
-          تحكم كامل في بطاقات الزبائن، الديون والتسديدات… ثم بيع سريع في الكومبتوار،
-          وفوترة وطباعة احترافية (A4 / Ticket / TVA / Proforma) مع تقارير دقيقة.
-        </p>
-        <p class="fr frBlock hide">
-          Gestion des clients, crédits et versements… puis vente comptoir rapide,
-          facturation & impressions pro (A4 / Ticket / TVA / Proforma) avec rapports précis.
-        </p>
-
-        <div class="heroMeta">
-          <span class="chip">✔ Solde</span>
-          <span class="chip">✔ Crédit</span>
-          <span class="chip">✔ Ticket</span>
-          <span class="chip">✔ A4</span>
-          <span class="chip">✔ TVA</span>
-        </div>
-      </div>
-
+      <div class="bmIcon">BM</div>
     </div>
-
-    <!-- SMART NAV (Highlight section عند السكرول) -->
-    <div class="smartNav" id="smartNav">
-      <a href="#secClients">👥 <span class="arBlock">الزبائن</span><span class="fr frBlock hide">Clients</span></a>
-      <a href="#secVentes">🛒 <span class="arBlock">المبيعات</span><span class="fr frBlock hide">Ventes</span></a>
-      <a href="#secFact">🧾 <span class="arBlock">الفوترة</span><span class="fr frBlock hide">Facturation</span></a>
-      <a href="#secRap">📊 <span class="arBlock">التقارير</span><span class="fr frBlock hide">Rapports</span></a>
-      <a href="https://wa.me/213662541486" target="_blank" class="active">💬 WhatsApp</a>
-    </div>
-
-    <!-- ======= CLIENTS ======= -->
-    <div class="secTitle" id="secClients">
-      <div>
-        <h2 class="arBlock">👥 تسيير الزبائن</h2>
-        <h2 class="fr frBlock hide">👥 Gestion des clients</h2>
-        <div class="sub arBlock">بطاقة زبون • ديون • تسديدات • طباعة وصل</div>
-        <div class="sub fr frBlock hide">Fiche • Crédit • Versements • Reçus</div>
-      </div>
-      <div class="leftTag">Clients</div>
-    </div>
-
-    <div class="grid">
-      <div class="card">
-        <div class="shot" data-zoom="gestion_client.png">
-          <img src="gestion_client.png" alt="Gestion client">
-          <div class="cap arBlock">بطاقة زبون كاملة</div>
-          <div class="cap fr frBlock hide">Fiche client</div>
-        </div>
-        <div class="body">
-          <h3 class="arBlock">كل معلومات الزبون في نافذة واحدة</h3>
-          <p class="arBlock">الاسم، العنوان، الهاتف، النوع… مع الرصيد ظاهر دائمًا.</p>
-
-          <h3 class="fr frBlock hide">Tout au même endroit</h3>
-          <p class="fr frBlock hide">Nom, adresse, téléphone… solde visible en permanence.</p>
-
-          <div class="pills">
-            <span class="pillTag">Solde</span><span class="pillTag">Historique</span><span class="pillTag">Crédit</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="shot" data-zoom="versement_client.png">
-          <img src="versement_client.png" alt="Versement client">
-          <div class="cap arBlock">تسديدات الزبون</div>
-          <div class="cap fr frBlock hide">Versements</div>
-        </div>
-        <div class="body">
-          <h3 class="arBlock">متابعة الديون والتسديدات</h3>
-          <p class="arBlock">تسجيل تسديد + وصل + رصيد قديم/جديد لتفادي النزاعات.</p>
-
-          <h3 class="fr frBlock hide">Suivi dettes</h3>
-          <p class="fr frBlock hide">Versement + reçu + ancien/nouveau solde.</p>
-
-          <div class="pills">
-            <span class="pillTag">Reçu</span><span class="pillTag">A4</span><span class="pillTag">Validation</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ======= VENTES ======= -->
-    <div class="secTitle" id="secVentes">
-      <div>
-        <h2 class="arBlock">🛒 المبيعات</h2>
-        <h2 class="fr frBlock hide">🛒 Ventes</h2>
-        <div class="sub arBlock">كومبتوار سريع • نقدًا/بالدين • بيع بالصور</div>
-        <div class="sub fr frBlock hide">Comptoir • Espèce/Crédit • Vente par images</div>
-      </div>
-      <div class="leftTag">Ventes</div>
-    </div>
-
-    <div class="grid">
-      <div class="card">
-        <div class="shot" data-zoom="vente_comptoir_espece.png">
-          <img src="vente_comptoir_espece.png" alt="Vente espèce">
-          <div class="cap arBlock">بيع نقدًا</div>
-          <div class="cap fr frBlock hide">Espèce</div>
-        </div>
-        <div class="body">
-          <h3 class="arBlock">سرعة + مجموع فوري</h3>
-          <p class="arBlock">إدخال سريع للسلع، اختصارات، دفع مباشر، وطباعة تيكيت.</p>
-
-          <h3 class="fr frBlock hide">Rapide & total instantané</h3>
-          <p class="fr frBlock hide">Saisie rapide, raccourcis, paiement et ticket.</p>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="shot" data-zoom="vente_credit.png">
-          <img src="vente_credit.png" alt="Vente crédit">
-          <div class="cap arBlock">بيع بالدين</div>
-          <div class="cap fr frBlock hide">Crédit</div>
-        </div>
-        <div class="body">
-          <h3 class="arBlock">تحديث الرصيد تلقائيًا</h3>
-          <p class="arBlock">عند اختيار الدفع بالدين، يتم تحديث رصيد الزبون فورًا.</p>
-
-          <h3 class="fr frBlock hide">Solde automatique</h3>
-          <p class="fr frBlock hide">Le solde client se met à jour automatiquement.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- ======= FACTURATION ======= -->
-    <div class="secTitle" id="secFact">
-      <div>
-        <h2 class="arBlock">🧾 الفوترة</h2>
-        <h2 class="fr frBlock hide">🧾 Facturation</h2>
-        <div class="sub arBlock">TVA • A4 • Proforma • Bon de livraison</div>
-        <div class="sub fr frBlock hide">TVA • A4 • Proforma • Bon de livraison</div>
-      </div>
-      <div class="leftTag">Factures</div>
-    </div>
-
-    <div class="grid">
-      <div class="card">
-        <div class="shot" data-zoom="facture.png">
-          <img src="facture.png" alt="Facture TVA">
-          <div class="cap arBlock">فاتورة TVA</div>
-          <div class="cap fr frBlock hide">Facture TVA</div>
-        </div>
-        <div class="body">
-          <h3 class="arBlock">فواتير قانونية ومنظمة</h3>
-          <p class="arBlock">تفاصيل، تخفيض، TVA، طابع… مع طباعة احترافية.</p>
-
-          <h3 class="fr frBlock hide">Factures conformes</h3>
-          <p class="fr frBlock hide">Détails, remise, TVA, timbre… impression pro.</p>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="shot" data-zoom="facture_proforma.png">
-          <img src="facture_proforma.png" alt="Proforma">
-          <div class="cap arBlock">Proforma</div>
-          <div class="cap fr frBlock hide">Proforma</div>
-        </div>
-        <div class="body">
-          <h3 class="arBlock">عرض سعر قبل البيع</h3>
-          <p class="arBlock">فاتورة Proforma لإعطاء الزبون نظرة واضحة عن الأسعار.</p>
-
-          <h3 class="fr frBlock hide">Devis avant vente</h3>
-          <p class="fr frBlock hide">Proforma pour présenter clairement les prix.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- ======= REPORTS ======= -->
-    <div class="secTitle" id="secRap">
-      <div>
-        <h2 class="arBlock">📊 التقارير والتحليلات</h2>
-        <h2 class="fr frBlock hide">📊 Journaux & analyses</h2>
-        <div class="sub arBlock">Journal • أرباح • حركة السلع</div>
-        <div class="sub fr frBlock hide">Journal • Bénéfice • Mouvements</div>
-      </div>
-      <div class="leftTag">Rapports</div>
-    </div>
-
-    <div class="grid">
-      <div class="card">
-        <div class="shot" data-zoom="journal_ventes.png">
-          <img src="journal_ventes.png" alt="Journal ventes">
-          <div class="cap arBlock">Journal المبيعات</div>
-          <div class="cap fr frBlock hide">Journal ventes</div>
-        </div>
-        <div class="body">
-          <h3 class="arBlock">تحليل دقيق للمبيعات</h3>
-          <p class="arBlock">بحث وفلاتر وإجماليات حسب التاريخ والزبون والسلعة.</p>
-
-          <h3 class="fr frBlock hide">Analyse ventes</h3>
-          <p class="fr frBlock hide">Filtres et totaux par date, client, article.</p>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="shot" data-zoom="mouvement_stock.png">
-          <img src="mouvement_stock.png" alt="Mouvement stock">
-          <div class="cap arBlock">حركة السلع</div>
-          <div class="cap fr frBlock hide">Mouvements</div>
-        </div>
-        <div class="body">
-          <h3 class="arBlock">تتبع شامل</h3>
-          <p class="arBlock">دخول/خروج، مورد/زبون، كميات وأسعار عبر الزمن.</p>
-
-          <h3 class="fr frBlock hide">Traçabilité complète</h3>
-          <p class="fr frBlock hide">Entrées/sorties, fournisseurs/clients, historique.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- FOOTER -->
-    <div class="foot">
-      <div class="arBlock">
-        🌐 <a href="https://www.bmsoftdev.com/" target="_blank" rel="noopener">www.bmsoftdev.com</a>
-        • ProBMS — Clients • Ventes • Facturation — 06.62.54.14.86 / 07.76.07.77.94
-      </div>
-      <div class="fr frBlock hide">
-        🌐 <a href="https://www.bmsoftdev.com/" target="_blank" rel="noopener">www.bmsoftdev.com</a>
-        • ProBMS — Clients • Ventes • Facturation — 06.62.54.14.86 / 07.76.07.77.94
-      </div>
-    </div>
-
   </div>
 
-  <!-- LIGHTBOX -->
-  <div class="lightbox" id="lightbox" aria-hidden="true">
-    <div class="close" id="lbClose">✕</div>
-    <img id="lbImg" src="" alt="Zoom">
+  <!-- HERO -->
+  <div class="hero">
+    <div class="heroImg">
+      <!-- صورة كبيرة (تقدر تبدلها) -->
+      <img src="logo.png" alt="ProBMS">
+    </div>
+
+    <div class="heroBig">
+      <h1 class="arBlock">🧾 تسيير الزبائن والمبيعات في ProBMS</h1>
+      <h1 class="fr frBlock hide">🧾 Clients & Ventes dans ProBMS</h1>
+
+      <p class="arBlock">
+        تحكم كامل في الزبائن، الديون والتسديدات… ثم بيع سريع في الكومبتوار،
+        وفوترة وطباعة احترافية (A4 / Ticket / TVA / Proforma) مع تقارير دقيقة.
+      </p>
+      <p class="fr frBlock hide">
+        Gestion des clients, crédits et versements… vente comptoir rapide,
+        facturation & impressions pro (A4 / Ticket / TVA / Proforma) + rapports précis.
+      </p>
+
+      <div class="features">
+        <div class="feature">
+          <b>👥 <span class="arBlock">الزبائن</span><span class="fr frBlock hide">Clients</span></b>
+          <span class="arBlock">بطاقات • أرصدة • ديون • تسديدات</span>
+          <span class="fr frBlock hide">Fiches • soldes • crédits • versements</span>
+        </div>
+        <div class="feature">
+          <b>🛒 <span class="arBlock">المبيعات</span><span class="fr frBlock hide">Ventes</span></b>
+          <span class="arBlock">كومبتوار • نقد/دين • صور</span>
+          <span class="fr frBlock hide">Comptoir • Espèce/Crédit • Images</span>
+        </div>
+        <div class="feature">
+          <b>🧾 <span class="arBlock">الفوترة</span><span class="fr frBlock hide">Facturation</span></b>
+          <span class="arBlock">Ticket • A4 • TVA • Proforma</span>
+          <span class="fr frBlock hide">Ticket • A4 • TVA • Proforma</span>
+        </div>
+        <div class="feature">
+          <b>📊 <span class="arBlock">التقارير</span><span class="fr frBlock hide">Rapports</span></b>
+          <span class="arBlock">Journal • فلاتر • إجماليات</span>
+          <span class="fr frBlock hide">Journal • Filtres • Totaux</span>
+        </div>
+      </div>
+    </div>
   </div>
+
+  <!-- ===== CLIENTS ===== -->
+  <div class="secTitle" id="secClients">
+    <div>
+      <h2 class="arBlock">👥 تسيير الزبائن</h2>
+      <h2 class="fr frBlock hide">👥 Gestion des clients</h2>
+      <div class="sub arBlock">بطاقة زبون • ديون • تسديدات • طباعة وصل</div>
+      <div class="sub fr frBlock hide">Fiche • Crédit • Versements • Reçus</div>
+    </div>
+    <div class="leftTag">Clients</div>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <div class="shot" data-zoom="gestion_client.png">
+        <img src="gestion_client.png" alt="Gestion client">
+        <div class="cap arBlock">بطاقة زبون كاملة</div>
+        <div class="cap fr frBlock hide">Fiche client</div>
+      </div>
+      <div class="body">
+        <h3 class="arBlock">كل معلومات الزبون في نافذة واحدة</h3>
+        <p class="arBlock">الاسم، العنوان، الهاتف… مع الرصيد ظاهر دائمًا.</p>
+
+        <h3 class="fr frBlock hide">Tout au même endroit</h3>
+        <p class="fr frBlock hide">Nom, adresse, téléphone… solde visible en permanence.</p>
+
+        <div class="pills">
+          <span class="pillTag">Solde</span><span class="pillTag">Historique</span><span class="pillTag">Crédit</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="shot" data-zoom="versement_client.png">
+        <img src="versement_client.png" alt="Versement client">
+        <div class="cap arBlock">تسديدات الزبون</div>
+        <div class="cap fr frBlock hide">Versements</div>
+      </div>
+      <div class="body">
+        <h3 class="arBlock">متابعة الديون والتسديدات</h3>
+        <p class="arBlock">تسجيل تسديد + وصل + رصيد قديم/جديد لتفادي النزاعات.</p>
+
+        <h3 class="fr frBlock hide">Suivi des crédits</h3>
+        <p class="fr frBlock hide">Versement + reçu + ancien/nouveau solde.</p>
+
+        <div class="pills">
+          <span class="pillTag">Reçu</span><span class="pillTag">A4</span><span class="pillTag">Validation</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== VENTES ===== -->
+  <div class="secTitle" id="secVentes">
+    <div>
+      <h2 class="arBlock">🛒 المبيعات</h2>
+      <h2 class="fr frBlock hide">🛒 Ventes</h2>
+      <div class="sub arBlock">كومبتوار سريع • نقدًا/بالدين • بيع بالصور</div>
+      <div class="sub fr frBlock hide">Comptoir • Espèce/Crédit • Vente par images</div>
+    </div>
+    <div class="leftTag">Ventes</div>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <div class="shot" data-zoom="vente_comptoir_espece.png">
+        <img src="vente_comptoir_espece.png" alt="Vente comptoir">
+        <div class="cap arBlock">بيع نقدًا</div>
+        <div class="cap fr frBlock hide">Espèce</div>
+      </div>
+      <div class="body">
+        <h3 class="arBlock">سرعة + مجموع فوري</h3>
+        <p class="arBlock">إدخال سريع للسلع، اختصارات، دفع مباشر، وطباعة تيكيت.</p>
+
+        <h3 class="fr frBlock hide">Rapide & total instantané</h3>
+        <p class="fr frBlock hide">Saisie rapide, raccourcis, paiement et ticket.</p>
+
+        <div class="pills">
+          <span class="pillTag">Ticket</span><span class="pillTag">Raccourcis</span><span class="pillTag">Comptoir</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="shot" data-zoom="vente_credit.png">
+        <img src="vente_credit.png" alt="Vente crédit">
+        <div class="cap arBlock">بيع بالدين</div>
+        <div class="cap fr frBlock hide">Crédit</div>
+      </div>
+      <div class="body">
+        <h3 class="arBlock">تحديث الرصيد تلقائيًا</h3>
+        <p class="arBlock">عند اختيار الدفع بالدين، يتم تحديث رصيد الزبون فورًا.</p>
+
+        <h3 class="fr frBlock hide">Solde automatique</h3>
+        <p class="fr frBlock hide">Le solde client se met à jour automatiquement.</p>
+
+        <div class="pills">
+          <span class="pillTag">Solde</span><span class="pillTag">Crédit</span><span class="pillTag">Client</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="shot" data-zoom="vente_galerie.png">
+        <img src="vente_galerie.png" alt="Vente par images">
+        <div class="cap arBlock">بيع بالصور</div>
+        <div class="cap fr frBlock hide">Images</div>
+      </div>
+      <div class="body">
+        <h3 class="arBlock">واجهة صور للسلع</h3>
+        <p class="arBlock">اختيار سريع بالصور لتسريع البيع وتقليل الأخطاء.</p>
+
+        <h3 class="fr frBlock hide">Vente par images</h3>
+        <p class="fr frBlock hide">Sélection rapide par images pour gagner du temps.</p>
+
+        <div class="pills">
+          <span class="pillTag">Images</span><span class="pillTag">Top ventes</span><span class="pillTag">Catégories</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="shot" data-zoom="vente.png">
+        <img src="vente.png" alt="Vente interface">
+        <div class="cap arBlock">واجهة بيع</div>
+        <div class="cap fr frBlock hide">Interface vente</div>
+      </div>
+      <div class="body">
+        <h3 class="arBlock">واجهة بيع منظمة</h3>
+        <p class="arBlock">قائمة سلع + حساب إجمالي + أدوات سريعة في نفس الشاشة.</p>
+
+        <h3 class="fr frBlock hide">Interface structurée</h3>
+        <p class="fr frBlock hide">Liste articles + totaux + outils rapides sur un seul écran.</p>
+
+        <div class="pills">
+          <span class="pillTag">Total</span><span class="pillTag">Remise</span><span class="pillTag">Rendu</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== FACTURATION ===== -->
+  <div class="secTitle" id="secFact">
+    <div>
+      <h2 class="arBlock">🧾 الفوترة</h2>
+      <h2 class="fr frBlock hide">🧾 Facturation</h2>
+      <div class="sub arBlock">TVA • A4 • Proforma • Bon de livraison</div>
+      <div class="sub fr frBlock hide">TVA • A4 • Proforma • Bon de livraison</div>
+    </div>
+    <div class="leftTag">Factures</div>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <div class="shot" data-zoom="facture.png">
+        <img src="facture.png" alt="Facture TVA">
+        <div class="cap arBlock">فاتورة TVA</div>
+        <div class="cap fr frBlock hide">Facture TVA</div>
+      </div>
+      <div class="body">
+        <h3 class="arBlock">فواتير قانونية ومنظمة</h3>
+        <p class="arBlock">تفاصيل، تخفيض، TVA، طابع… مع طباعة احترافية.</p>
+
+        <h3 class="fr frBlock hide">Factures conformes</h3>
+        <p class="fr frBlock hide">Détails, remise, TVA, timbre… impression pro.</p>
+
+        <div class="pills">
+          <span class="pillTag">TVA</span><span class="pillTag">A4</span><span class="pillTag">Impression</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="shot" data-zoom="facture_proforma.png">
+        <img src="facture_proforma.png" alt="Proforma">
+        <div class="cap arBlock">Proforma</div>
+        <div class="cap fr frBlock hide">Proforma</div>
+      </div>
+      <div class="body">
+        <h3 class="arBlock">عرض سعر قبل البيع</h3>
+        <p class="arBlock">فاتورة Proforma لإعطاء الزبون نظرة واضحة عن الأسعار.</p>
+
+        <h3 class="fr frBlock hide">Devis avant vente</h3>
+        <p class="fr frBlock hide">Proforma pour présenter clairement les prix.</p>
+
+        <div class="pills">
+          <span class="pillTag">Devis</span><span class="pillTag">Proforma</span><span class="pillTag">Client</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== RAPPORTS ===== -->
+  <div class="secTitle" id="secRap">
+    <div>
+      <h2 class="arBlock">📊 التقارير والتحليلات</h2>
+      <h2 class="fr frBlock hide">📊 Journaux & analyses</h2>
+      <div class="sub arBlock">Journal • فلاتر • إجماليات • قوائم</div>
+      <div class="sub fr frBlock hide">Journal • Filtres • Totaux • Listes</div>
+    </div>
+    <div class="leftTag">Rapports</div>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <div class="shot" data-zoom="liste_ventes.png">
+        <img src="liste_ventes.png" alt="Journal ventes">
+        <div class="cap arBlock">Journal المبيعات</div>
+        <div class="cap fr frBlock hide">Journal des ventes</div>
+      </div>
+      <div class="body">
+        <h3 class="arBlock">تحليل دقيق للمبيعات</h3>
+        <p class="arBlock">بحث وفلاتر وإجماليات حسب التاريخ والزبون والسلعة.</p>
+
+        <h3 class="fr frBlock hide">Analyse des ventes</h3>
+        <p class="fr frBlock hide">Filtres et totaux par date, client et article.</p>
+
+        <div class="pills">
+          <span class="pillTag">Filtres</span><span class="pillTag">Totaux</span><span class="pillTag">Export</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- بطاقة إضافية (إذا عندك صورة أخرى للتقارير بدلها هنا) -->
+    <div class="card">
+      <div class="shot" data-zoom="vente.png">
+        <img src="vente.png" alt="Résumé">
+        <div class="cap arBlock">ملخص سريع</div>
+        <div class="cap fr frBlock hide">Résumé</div>
+      </div>
+      <div class="body">
+        <h3 class="arBlock">إجماليات واضحة</h3>
+        <p class="arBlock">إظهار الإجمالي، المدفوع، المتبقي بسرعة لاتخاذ قرار.</p>
+
+        <h3 class="fr frBlock hide">Totaux clairs</h3>
+        <p class="fr frBlock hide">Afficher total, payé, reste pour décider rapidement.</p>
+
+        <div class="pills">
+          <span class="pillTag">Total</span><span class="pillTag">Payé</span><span class="pillTag">Reste</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+<!-- ======= DOCUMENTS & IMPRESSIONS ======= -->
+<div class="secTitle" id="secDocs">
+  <div>
+    <h2 class="arBlock">🖨️ الوثائق والطباعة</h2>
+    <h2 class="fr frBlock hide">🖨️ Documents & impressions</h2>
+
+    <div class="sub arBlock">
+      Bon de livraison • Bon de caisse • Ticket • Reçu • Factures • Mouvements
+    </div>
+    <div class="sub fr frBlock hide">
+      BL • Caisse • Ticket • Reçu • Factures • Mouvements
+    </div>
+  </div>
+  <div class="leftTag">Print</div>
+</div>
+
+<div class="grid">
+
+  <!-- BON DE LIVRAISON -->
+  <div class="card">
+    <div class="shot" data-zoom="bl.png">
+      <img src="bl.png" alt="Bon de livraison">
+      <div class="cap">BL</div>
+    </div>
+    <div class="body">
+      <h3 class="arBlock">Bon de livraison</h3>
+      <h3 class="fr frBlock hide">Bon de livraison</h3>
+
+      <p class="arBlock">
+        طباعة Bon de livraison مع تفاصيل الزبون، السلع، الكميات، الإجمالي والباركود.
+      </p>
+      <p class="fr frBlock hide">
+        Impression BL avec client, articles, quantités, total et code-barres.
+      </p>
+
+      <div class="pills">
+        <span class="pillTag">BL</span>
+        <span class="pillTag">Code-barres</span>
+        <span class="pillTag">Crédit</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- BON DE CAISSE -->
+  <div class="card">
+    <div class="shot" data-zoom="caisse.png">
+      <img src="caisse.png" alt="Bon de caisse">
+      <div class="cap">Caisse</div>
+    </div>
+    <div class="body">
+      <h3 class="arBlock">Bon de caisse</h3>
+      <h3 class="fr frBlock hide">Bon de caisse</h3>
+
+      <p class="arBlock">
+        بيع نقدي أو بالدين مع طباعة فورية وإظهار الرصيد الجديد.
+      </p>
+      <p class="fr frBlock hide">
+        Vente espèce ou crédit avec impression et nouveau solde.
+      </p>
+
+      <div class="pills">
+        <span class="pillTag">Espèce</span>
+        <span class="pillTag">Crédit</span>
+        <span class="pillTag">Solde</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- FACTURE -->
+  <div class="card">
+    <div class="shot" data-zoom="etat_facture.png">
+      <img src="etat_facture.png" alt="Facture">
+      <div class="cap">Facture</div>
+    </div>
+    <div class="body">
+      <h3 class="arBlock">فاتورة رسمية</h3>
+      <h3 class="fr frBlock hide">Facture officielle</h3>
+
+      <p class="arBlock">
+        فاتورة منظمة مع TVA، تخفيض، طابع، وترقيم تلقائي.
+      </p>
+      <p class="fr frBlock hide">
+        Facture avec TVA, remise, timbre et numérotation.
+      </p>
+
+      <div class="pills">
+        <span class="pillTag">TVA</span>
+        <span class="pillTag">A4</span>
+        <span class="pillTag">Pro</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- TICKET DE CAISSE -->
+  <div class="card">
+    <div class="shot" data-zoom="ticket.png">
+      <img src="ticket.png" alt="Ticket caisse">
+      <div class="cap">Ticket</div>
+    </div>
+    <div class="body">
+      <h3 class="arBlock">Ticket de caisse</h3>
+      <h3 class="fr frBlock hide">Ticket de caisse</h3>
+
+      <p class="arBlock">
+        تيكيت حراري سريع مع شعار المحل، باركود ورسالة للزبون.
+      </p>
+      <p class="fr frBlock hide">
+        Ticket thermique avec logo, code-barres et message.
+      </p>
+
+      <div class="pills">
+        <span class="pillTag">Thermique</span>
+        <span class="pillTag">Rapide</span>
+        <span class="pillTag">POS</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- REÇU DE VERSEMENT -->
+  <div class="card">
+    <div class="shot" data-zoom="releve_versement.png">
+      <img src="releve_versement.png" alt="Reçu versement">
+      <div class="cap">Reçu</div>
+    </div>
+    <div class="body">
+      <h3 class="arBlock">وصل تسديد</h3>
+      <h3 class="fr frBlock hide">Reçu de versement</h3>
+
+      <p class="arBlock">
+        وصل تسديد يوضح المبلغ، الرصيد القديم والجديد لتفادي أي نزاع.
+      </p>
+      <p class="fr frBlock hide">
+        Reçu avec montant, ancien et nouveau solde.
+      </p>
+
+      <div class="pills">
+        <span class="pillTag">Versement</span>
+        <span class="pillTag">Solde</span>
+        <span class="pillTag">Historique</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- MOUVEMENT DES ARTICLES -->
+  <div class="card">
+    <div class="shot" data-zoom="mouvement_stock.png">
+      <img src="mouvement_stock.png" alt="Mouvement articles">
+      <div class="cap">Mouvements</div>
+    </div>
+    <div class="body">
+      <h3 class="arBlock">حركة السلع</h3>
+      <h3 class="fr frBlock hide">Mouvement des articles</h3>
+
+      <p class="arBlock">
+        تتبع دقيق لدخول وخروج السلع حسب التاريخ، الزبون أو المورد.
+      </p>
+      <p class="fr frBlock hide">
+        Suivi précis des entrées et sorties par date et partenaire.
+      </p>
+
+      <div class="pills">
+        <span class="pillTag">Entrées</span>
+        <span class="pillTag">Sorties</span>
+        <span class="pillTag">Historique</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <!-- FOOTER -->
+  <div class="foot">
+    <div class="arBlock">
+      🌐 <a href="https://www.bmsoftdev.com/" target="_blank" rel="noopener">www.bmsoftdev.com</a>
+      • ProBMS — Clients • Ventes • Facturation — 06.62.54.14.86 / 07.76.07.77.94
+    </div>
+    <div class="fr frBlock hide">
+      🌐 <a href="https://www.bmsoftdev.com/" target="_blank" rel="noopener">www.bmsoftdev.com</a>
+      • ProBMS — Clients • Ventes • Facturation — 06.62.54.14.86 / 07.76.07.77.94
+    </div>
+  </div>
+
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" aria-hidden="true">
+  <div class="close" id="lbClose">✕</div>
+  <img id="lbImg" src="" alt="Zoom">
+</div>
 
 <script>
-/* =========================
-   LANGUAGE SWITCH (AR/FR)
-========================= */
+/* ===== LANGUAGE SWITCH ===== */
 const arBlocks = document.querySelectorAll('.arBlock');
 const frBlocks = document.querySelectorAll('.frBlock');
 const btnAr = document.getElementById('btnAr');
@@ -717,10 +902,7 @@ btnAr.addEventListener('click', showAR);
 btnFr.addEventListener('click', showFR);
 showAR();
 
-/* =========================
-   LIGHTBOX (Zoom) - مضمون
-   - الضغط على الصورة أو أي مكان في shot
-========================= */
+/* ===== LIGHTBOX ===== */
 const lightbox = document.getElementById('lightbox');
 const lbImg = document.getElementById('lbImg');
 const lbClose = document.getElementById('lbClose');
@@ -747,28 +929,7 @@ document.querySelectorAll('.shot').forEach(shot=>{
 lbClose.addEventListener('click', closeLightbox);
 lightbox.addEventListener('click', (e)=>{ if(e.target === lightbox) closeLightbox(); });
 document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeLightbox(); });
-
-/* =========================
-   SMART NAV Active Section
-========================= */
-const nav = document.getElementById('smartNav');
-const navLinks = [...nav.querySelectorAll('a')].filter(a => a.getAttribute('href')?.startsWith('#'));
-const sections = navLinks.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
-
-function setActive(id){
-  navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#'+id));
-}
-
-function onScroll(){
-  const y = window.scrollY + 140;
-  let current = sections[0]?.id;
-  sections.forEach(sec=>{
-    if(sec.offsetTop <= y) current = sec.id;
-  });
-  if(current) setActive(current);
-}
-window.addEventListener('scroll', onScroll);
-onScroll();
 </script>
+
 </body>
 </html>
