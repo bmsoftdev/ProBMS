@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>ProBMS | الإعدادات المتقدمة</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg1:#050414;
+  --bg2:#120a2a;
+  --panel:rgba(14,10,31,.78);
+  --stroke:rgba(255,255,255,.12);
+  --text:#f1f5f9;
+  --muted:rgba(241,245,249,.65);
+  --mauve:#b55cff;
+  --mauve2:#7c3aed;
+  --good:#22c55e;
+  --shadow:0 25px 70px rgba(0,0,0,.6);
+  --radius:18px;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:'Cairo',Tahoma;
+  background:
+    radial-gradient(900px 500px at 15% 10%, rgba(181,92,255,.25), transparent 60%),
+    linear-gradient(135deg,var(--bg1),var(--bg2));
+  color:var(--text);
+}
+
+/* ===== HEADER ===== */
+.header{
+  max-width:1200px;
+  margin:30px auto;
+  padding:26px;
+  border-radius:22px;
+  background:linear-gradient(135deg,#1b0f3a,#120a2a);
+  border:1px solid var(--stroke);
+  box-shadow:var(--shadow);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:16px;
+  flex-wrap:wrap;
+}
+.header h1{
+  margin:0;
+  font-size:26px;
+}
+.header p{
+  margin:6px 0 0;
+  font-size:14px;
+  color:var(--muted);
+}
+
+/* HOME BUTTON */
+.home-btn{
+  padding:10px 18px;
+  border-radius:999px;
+  background:linear-gradient(135deg,var(--mauve),var(--mauve2));
+  color:#fff;
+  font-size:14px;
+  font-weight:700;
+  text-decoration:none;
+  box-shadow:0 12px 30px rgba(0,0,0,.4);
+  transition:.25s;
+  white-space:nowrap;
+}
+.home-btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 18px 40px rgba(0,0,0,.6);
+}
+
+/* ===== GRID ===== */
+.grid{
+  max-width:1200px;
+  margin:20px auto 80px;
+  padding:0 18px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:18px;
+}
+
+/* ===== CARD ===== */
+.card{
+  background:var(--panel);
+  border:1px solid var(--stroke);
+  border-radius:var(--radius);
+  overflow:hidden;
+  transition:.25s;
+}
+.card:hover{
+  transform:translateY(-6px);
+  border-color:rgba(181,92,255,.45);
+}
+
+/* IMAGE */
+.card img{
+  width:100%;
+  height:180px;
+  object-fit:cover;
+  background:#000;
+}
+
+/* CONTENT */
+.card .content{
+  padding:16px;
+}
+.section-title{
+  font-size:17px;
+  font-weight:700;
+  margin-bottom:6px;
+}
+.section-sub{
+  font-size:13px;
+  color:var(--muted);
+  line-height:1.6;
+}
+ul{
+  margin:10px 0 0;
+  padding-right:18px;
+}
+li{
+  font-size:13px;
+  margin-bottom:5px;
+}
+.badge{
+  display:inline-block;
+  margin-top:10px;
+  font-size:12px;
+  color:var(--good);
+}
+
+/* ===== WHATSAPP FLOAT ===== */
+.whatsapp{
+  position:fixed;
+  bottom:22px;
+  right:22px;
+  width:58px;
+  height:58px;
+  border-radius:50%;
+  background:#25D366;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:30px;
+  color:#fff;
+  text-decoration:none;
+  box-shadow:0 18px 40px rgba(0,0,0,.5);
+  transition:.25s;
+  z-index:999;
+}
+.whatsapp:hover{
+  transform:scale(1.08);
+}
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div>
+    <h1>⚙️ إعدادات ProBMS المتقدمة</h1>
+    <p>مرونة كاملة • تحكم ذكي • أمان البيانات • سرعة في العمل اليومي</p>
+  </div>
+  <a href="../index.html" class="home-btn">🏠 الصفحة الرئيسية</a>
+</div>
+
+<!-- GRID -->
+<div class="grid">
+
+  <div class="card">
+    <img src="parametrage_vente.png">
+    <div class="content">
+      <div class="section-title">🖨️ إعدادات البيع والطباعة</div>
+      <div class="section-sub">تحكم كامل في الفواتير، التيكيت، والباركود</div>
+      <ul>
+        <li>طباعة تلقائية A4 / Ticket</li>
+        <li>تفعيل الباركود</li>
+        <li>عدد النسخ الافتراضي</li>
+      </ul>
+      <span class="badge">✔ احترافية البيع</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="inventaire.png">
+    <div class="content">
+      <div class="section-title">📦 مراجعة وضبط المخزون</div>
+      <ul>
+        <li>إعادة تصفير الكميات</li>
+        <li>مراجعة المخزون الأولي</li>
+        <li>منع البيع عند النفاد</li>
+      </ul>
+      <span class="badge">✔ تحكم دقيق</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="users_droits.png">
+    <div class="content">
+      <div class="section-title">👥 المستخدمون والصلاحيات</div>
+      <ul>
+        <li>إخفاء سعر الشراء</li>
+        <li>صلاحيات الأرباح</li>
+        <li>مستويات وصول</li>
+      </ul>
+      <span class="badge">✔ حماية البيانات</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="etiquette_barcode.png">
+    <div class="content">
+      <div class="section-title">🏷️ الإتيكيت والباركود</div>
+      <ul>
+        <li>A4 و Roll</li>
+        <li>نماذج متعددة</li>
+        <li>اختيار الطابعة</li>
+      </ul>
+      <span class="badge">✔ عرض احترافي</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="sauvegarde.png">
+    <div class="content">
+      <div class="section-title">💾 النسخ الاحتياطي</div>
+      <ul>
+        <li>حفظ تلقائي</li>
+        <li>موقعين للحفظ</li>
+        <li>استرجاع الأرشيف</li>
+      </ul>
+      <span class="badge">✔ أمان البيانات</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="raccourcis.png">
+    <div class="content">
+      <div class="section-title">⌨️ اختصارات ذكية</div>
+      <ul>
+        <li>CTRL + ALT</li>
+        <li>F1 → F12</li>
+        <li>تسريع العمليات</li>
+      </ul>
+      <span class="badge">✔ إنتاجية أعلى</span>
+    </div>
+  </div>
+
+</div>
+
+<!-- WHATSAPP -->
+<a class="whatsapp" href="https://wa.me/213662541486" target="_blank">💬</a>
+
+</body>
+</html>
