@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ProBMS | المصاريف • الفائدة • الإحصاءات</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg1:#050414;
+      --bg2:#120a2a;
+      --card:#0e0a1f;
+      --stroke:rgba(255,255,255,.10);
+      --text:#f1f5f9;
+      --muted:rgba(241,245,249,.72);
+      --mauve:#b55cff;
+      --mauve2:#7c3aed;
+      --cyan:#22d3ee;
+      --good:#22c55e;
+      --warn:#f59e0b;
+      --bad:#ef4444;
+      --shadow:0 25px 60px rgba(0,0,0,.55);
+      --shadow2:0 18px 45px rgba(0,0,0,.45);
+      --radius:22px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:'Cairo',Tahoma,Arial,sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(900px 520px at 12% 10%, rgba(181,92,255,.25), transparent 60%),
+        radial-gradient(900px 520px at 88% 18%, rgba(34,211,238,.12), transparent 60%),
+        radial-gradient(1200px 800px at 50% 95%, rgba(124,58,237,.18), transparent 65%),
+        linear-gradient(135deg,var(--bg1),var(--bg2));
+      overflow-x:hidden;
+    }
+
+    /* subtle stars */
+    .stars{
+      position:fixed; inset:0; pointer-events:none; opacity:.28;
+      background-image:
+        radial-gradient(2px 2px at 20px 30px, rgba(255,255,255,.35), transparent 55%),
+        radial-gradient(1px 1px at 180px 120px, rgba(255,255,255,.25), transparent 60%),
+        radial-gradient(1px 1px at 380px 260px, rgba(255,255,255,.20), transparent 60%),
+        radial-gradient(2px 2px at 70% 20%, rgba(255,255,255,.22), transparent 55%),
+        radial-gradient(1px 1px at 85% 65%, rgba(255,255,255,.18), transparent 60%);
+      background-size: 420px 320px;
+      filter: blur(.25px);
+    }
+
+    .wrap{max-width:1200px;margin:22px auto;padding:0 14px}
+    a{color:inherit}
+
+    /* ===== Top bar (like your Stock page) ===== */
+    .top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:14px 14px;
+      border:1px solid var(--stroke);
+      border-radius:999px;
+      background:rgba(14,10,31,.58);
+      backdrop-filter: blur(10px);
+      box-shadow: var(--shadow2);
+    }
+
+    .leftControls, .rightControls{
+      display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+    }
+
+    .btn{
+      border:1px solid var(--stroke);
+      background:rgba(255,255,255,.06);
+      color:var(--text);
+      padding:10px 14px;
+      border-radius:999px;
+      cursor:pointer;
+      text-decoration:none;
+      transition:.18s transform,.18s background,.18s border-color;
+      font-weight:900;
+      font-size:13px;
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+      user-select:none;
+      white-space:nowrap;
+    }
+    .btn:hover{transform:translateY(-1px);background:rgba(255,255,255,.09);border-color:rgba(181,92,255,.35)}
+    .btn.primary{
+      background:linear-gradient(135deg, rgba(181,92,255,.35), rgba(124,58,237,.28));
+      border-color:rgba(181,92,255,.45);
+    }
+    .btn.whats{
+      border-color:rgba(34,197,94,.35);
+      background:rgba(34,197,94,.10);
+    }
+    .btn.whats:hover{border-color:rgba(34,197,94,.55)}
+    .chip{
+      font-size:12px;
+      padding:8px 10px;
+      border-radius:999px;
+      background:rgba(0,0,0,.25);
+      border:1px solid var(--stroke);
+      color:var(--muted);
+      white-space:nowrap;
+    }
+
+    .brand{
+      display:flex; align-items:center; gap:12px;
+      min-width:220px;
+    }
+    .logo{
+      width:46px;height:46px;border-radius:14px;
+      background:linear-gradient(135deg, rgba(181,92,255,.22), rgba(124,58,237,.18));
+      border:1px solid var(--stroke);
+      display:flex;align-items:center;justify-content:center;
+      overflow:hidden;
+      font-weight:900;
+    }
+    .logo img{width:100%;height:100%;object-fit:cover}
+    .brand h1{margin:0;font-size:15px;line-height:1.2}
+    .brand p{margin:0;font-size:12px;color:var(--muted)}
+
+    /* Language toggle row */
+    .langRow{
+      margin-top:10px;
+      display:flex; gap:10px; align-items:center;
+      justify-content:flex-start;
+      flex-wrap:wrap;
+    }
+    .toggle{
+      display:inline-flex; gap:8px; align-items:center;
+      border:1px solid var(--stroke);
+      padding:10px 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.05);
+      cursor:pointer;
+      font-weight:900;
+      font-size:13px;
+      user-select:none;
+      transition:.18s transform,.18s border-color;
+    }
+    .toggle:hover{transform:translateY(-1px);border-color:rgba(181,92,255,.35)}
+    .toggle.active{
+      border-color:rgba(181,92,255,.55);
+      background:rgba(181,92,255,.12);
+    }
+    .toggle small{font-weight:800;color:var(--muted)}
+    .fr{direction:ltr;text-align:left;font-family:Segoe UI, Tahoma, Arial, sans-serif}
+    .hide{display:none!important}
+
+    /* ===== Hero ===== */
+    .hero{
+      margin-top:14px;
+      border-radius:var(--radius);
+      border:1px solid var(--stroke);
+      background:rgba(14,10,31,.58);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      position:relative;
+    }
+    .hero::before{
+      content:"";
+      position:absolute; inset:-2px;
+      background:
+        radial-gradient(640px 280px at 20% 30%, rgba(181,92,255,.22), transparent 62%),
+        radial-gradient(520px 240px at 80% 25%, rgba(34,211,238,.12), transparent 60%);
+      pointer-events:none;
+    }
+    .heroInner{
+      position:relative;
+      display:grid;
+      grid-template-columns: .95fr 1.05fr;
+      gap:16px;
+      padding:18px;
+      align-items:stretch;
+    }
+    @media(max-width: 980px){
+      .heroInner{grid-template-columns:1fr}
+    }
+
+    .heroMedia{
+      border-radius:18px;
+      border:1px solid rgba(181,92,255,.25);
+      background:rgba(0,0,0,.18);
+      overflow:hidden;
+      position:relative;
+      min-height:280px;
+    }
+    .heroMedia img{
+      width:100%;
+      height:100%;
+      min-height:280px;
+      object-fit:cover;
+      display:block;
+      cursor:zoom-in;
+      filter:saturate(1.05) contrast(1.03);
+    }
+    .badge{
+      position:absolute;
+      top:12px;
+      right:12px;
+      padding:8px 10px;
+      border-radius:999px;
+      background:rgba(0,0,0,.35);
+      border:1px solid var(--stroke);
+      font-size:12px;
+      color:var(--text);
+      display:flex; align-items:center; gap:8px;
+    }
+
+    .heroText{
+      padding:4px 4px;
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+    }
+    .kicker{
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+      color:var(--muted);
+      font-size:12px;
+      border:1px solid var(--stroke);
+      padding:8px 10px;
+      border-radius:999px;
+      background:rgba(255,255,255,.05);
+      width:fit-content;
+    }
+    .title{
+      margin:0;
+      font-size:34px;
+      line-height:1.2;
+      letter-spacing:.2px;
+    }
+    .subtitle{
+      margin:0;
+      color:var(--muted);
+      font-size:15px;
+      line-height:1.9;
+    }
+
+    .featureGrid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+      margin-top:6px;
+    }
+    @media(max-width:520px){
+      .featureGrid{grid-template-columns:1fr}
+    }
+    .feat{
+      border:1px solid var(--stroke);
+      background:rgba(255,255,255,.05);
+      border-radius:16px;
+      padding:12px;
+      box-shadow: 0 14px 30px rgba(0,0,0,.18);
+      position:relative;
+      overflow:hidden;
+    }
+    .feat::after{
+      content:"";
+      position:absolute; inset:-2px;
+      background: radial-gradient(420px 200px at 20% 0%, rgba(181,92,255,.18), transparent 60%);
+      opacity:.7; pointer-events:none;
+    }
+    .featRow{position:relative; display:flex; gap:10px; align-items:flex-start}
+    .dot{
+      width:10px;height:10px;border-radius:999px;
+      margin-top:6px;
+      background:linear-gradient(135deg,var(--mauve),var(--mauve2));
+      box-shadow:0 0 0 4px rgba(181,92,255,.10);
+      flex:0 0 auto;
+    }
+    .feat b{display:block;margin-bottom:4px}
+    .feat span{display:block;color:var(--muted);font-size:13px;line-height:1.7}
+
+    /* ===== Sections ===== */
+    .section{margin-top:16px}
+    .sectionHead{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:10px;
+      margin:0 4px 10px;
+      flex-wrap:wrap;
+    }
+    .sectionHead h2{margin:0;font-size:18px}
+    .sectionHead p{margin:0;color:var(--muted);font-size:13px}
+
+    .grid{
+      display:grid;
+      gap:12px;
+      grid-template-columns: repeat(3, 1fr);
+    }
+    @media (max-width: 980px){ .grid{grid-template-columns: repeat(2, 1fr);} }
+    @media (max-width: 640px){ .grid{grid-template-columns: 1fr;} }
+
+    .card{
+      border:1px solid var(--stroke);
+      background:rgba(14,10,31,.58);
+      border-radius:18px;
+      box-shadow: var(--shadow2);
+      overflow:hidden;
+      backdrop-filter: blur(10px);
+      transition:.18s transform,.18s border-color;
+    }
+    .card:hover{transform:translateY(-2px);border-color:rgba(181,92,255,.35)}
+
+    /* Bigger images (تكبير الصور) */
+    .img{
+      width:100%;
+      aspect-ratio: 16 / 9;
+      background:rgba(0,0,0,.18);
+      border-bottom:1px solid var(--stroke);
+      position:relative;
+      overflow:hidden;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    .img img{
+      width:100%;
+      height:100%;
+      object-fit:cover; /* خليه cover باش يبان كبير */
+      display:block;
+      cursor:zoom-in;
+    }
+    .cap{
+      position:absolute;
+      bottom:10px;
+      right:10px;
+      background:rgba(0,0,0,.40);
+      border:1px solid var(--stroke);
+      padding:7px 10px;
+      border-radius:999px;
+      font-size:12px;
+      color:var(--text);
+      max-width:calc(100% - 20px);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    .body{padding:14px}
+    .card h3{margin:0 0 6px;font-size:15px}
+    .card p{margin:0;color:var(--muted);font-size:13px;line-height:1.85}
+    .tags{margin-top:10px;display:flex;flex-wrap:wrap;gap:8px}
+    .tag{
+      font-size:12px;color:var(--text);
+      padding:7px 10px;border-radius:999px;
+      border:1px solid var(--stroke);
+      background:rgba(255,255,255,.05);
+    }
+
+    /* Callouts */
+    .callouts{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+    @media(max-width:800px){.callouts{grid-template-columns:1fr}}
+    .callout{
+      border:1px solid rgba(181,92,255,.25);
+      background:linear-gradient(135deg,rgba(181,92,255,.14),rgba(124,58,237,.08));
+      border-radius:18px;
+      padding:14px;
+      box-shadow: 0 14px 35px rgba(0,0,0,.25);
+    }
+    .callout b{display:block;margin-bottom:6px}
+    .callout p{margin:0;color:var(--muted);line-height:1.85;font-size:13px}
+
+    .foot{
+      text-align:center;
+      color:rgba(241,245,249,.55);
+      font-size:12px;
+      padding:16px 0 26px;
+    }
+    .foot a{color:#fff;text-decoration:none;border-bottom:1px dashed rgba(255,255,255,.35)}
+    .foot a:hover{border-bottom-color:rgba(181,92,255,.65)}
+
+    /* ===== Lightbox ===== */
+    .lightbox{
+      position:fixed;
+      inset:0;
+      background:rgba(5,5,15,.92);
+      backdrop-filter: blur(6px);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      z-index:9999;
+      padding:20px;
+    }
+    .lightbox.active{display:flex}
+    .lightbox img{
+      max-width:96%;
+      max-height:90vh;
+      border-radius:18px;
+      box-shadow:0 30px 80px rgba(0,0,0,.8);
+      animation:zoomIn .25s ease-out;
+      background:#000;
+    }
+    .lightbox .close{
+      position:absolute;
+      top:18px;
+      left:18px;
+      font-size:26px;
+      font-weight:900;
+      color:#fff;
+      cursor:pointer;
+      padding:6px 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.15);
+      border:1px solid rgba(255,255,255,.25);
+    }
+    @keyframes zoomIn{
+      from{transform:scale(.85);opacity:0}
+      to{transform:scale(1);opacity:1}
+    }
+
+    /* Mobile tweaks */
+    @media(max-width:640px){
+      .top{border-radius:18px}
+      .title{font-size:28px}
+      .heroInner{padding:14px}
+      .heroMedia img{min-height:220px}
+      .img{aspect-ratio: 16/10}
+      .btn{padding:9px 12px}
+    }
+
+    /* Focus */
+    a:focus, .toggle:focus, .btn:focus{
+      outline:2px solid rgba(181,92,255,.55);
+      outline-offset:3px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="stars"></div>
+
+  <div class="wrap">
+
+
+
+    <!-- TOP BAR -->
+    <div class="top">
+      <div class="leftControls">
+        <a class="btn primary" href="../index.html">↩️ <span class="arBlock">الرجوع للرئيسية</span><span class="fr frBlock hide">Retour accueil</span></a>
+        <a class="btn whats" href="https://wa.me/213662541486" target="_blank" rel="noopener">💬 <span class="arBlock">واتساب</span><span class="fr frBlock hide">WhatsApp</span></a>
+        <span class="chip">Module: Stats</span>
+      </div>
+
+
+
+
+      <div class="brand">
+        <div class="logo">
+          <img src="logo.png" alt="BM Soft" onerror="this.style.display='none'; this.parentElement.textContent='BM';">
+        </div>
+        <div>
+          <h1>BM Soft • ProBMS</h1>
+          <p class="arBlock">صفحة توضيحية: المصاريف • الفائدة • الإحصاءات</p>
+          <p class="fr frBlock hide">Page: Frais • Bénéfice • Statistiques</p>
+        </div>
+      </div>
+
+      <div class="rightControls">
+        <a class="btn" href="https://www.bmsoftdev.com/" target="_blank" rel="noopener">🌐 <span class="arBlock">الموقع</span><span class="fr frBlock hide">Site</span></a>
+        <span class="chip">06.62.54.14.86 / 07.76.07.77.94</span>
+      </div>
+    </div>
+
+
+
+    <!-- LANG TOGGLES -->
+    <div class="langRow">
+      <div class="toggle active" id="btnAr">AR <small>العربية</small></div>
+      <div class="toggle" id="btnFr">FR <small>Français</small></div>
+    </div>
+
+    <!-- HERO -->
+    <div class="hero">
+      <div class="heroInner">
+        <!-- image -->
+        <div class="heroMedia">
+          <div class="badge">📊 ProBMS • Stats</div>
+          <!-- ضع الصورة التي تريدها كبانر (مثلا caisse.png) -->
+          <img src="logo.png" alt="Aperçu" class="zoomable"
+               onerror="this.style.display='none';">
+        </div>
+
+        <!-- text -->
+        <div class="heroText">
+          <div class="kicker arBlock">📌 تحكم مالي ذكي: مصاريف + فوائد + تقارير… في مكان واحد</div>
+          <div class="kicker fr frBlock hide">📌 Pilotage intelligent: frais + bénéfice + rapports… au même endroit</div>
+
+          <h2 class="title arBlock">تسيير المصاريف والفائدة والإحصاءات في ProBMS</h2>
+          <p class="subtitle arBlock">
+            من تسجيل المصاريف اليومية، إلى حساب الفائدة الشهرية/السنوية،
+            ثم استخراج جداول وتحليلات دقيقة حسب الزبون، السلعة، العائلة أو العلامة…
+            واجهة واضحة تساعدك تقلّل الأخطاء وتراقب الأداء لحظة بلحظة.
+          </p>
+
+          <h2 class="title fr frBlock hide">Frais, bénéfice & statistiques dans ProBMS</h2>
+          <p class="subtitle fr frBlock hide">
+            De la saisie des frais journaliers, au calcul du bénéfice mensuel/annuel,
+            puis des analyses détaillées par client, article, famille ou marque…
+            Des écrans clairs pour réduire les erreurs et piloter votre activité.
+          </p>
+
+          <div class="featureGrid">
+            <div class="feat">
+              <div class="featRow">
+                <div class="dot"></div>
+                <div>
+                  <b class="arBlock">💸 تسيير المصاريف</b>
+                  <span class="arBlock">تصنيف المصاريف + فلاتر حسب التاريخ + إجماليات + طباعة.</span>
+
+                  <b class="fr frBlock hide">💸 Gestion des frais</b>
+                  <span class="fr frBlock hide">Catégories + filtres par date + totaux + impression.</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="feat">
+              <div class="featRow">
+                <div class="dot"></div>
+                <div>
+                  <b class="arBlock">📈 فوائد دقيقة</b>
+                  <span class="arBlock">حساب الفائدة حسب الشهر/السنة مع مقارنة شراء/بيع وتخفيضات.</span>
+
+                  <b class="fr frBlock hide">📈 Bénéfice précis</b>
+                  <span class="fr frBlock hide">Calcul mensuel/annuel avec achat/vente et remises.</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="feat">
+              <div class="featRow">
+                <div class="dot"></div>
+                <div>
+                  <b class="arBlock">👤 تحليل حسب الزبون</b>
+                  <span class="arBlock">TOP زبائن + نسبة المساهمة + إجمالي البيع والربح.</span>
+
+                  <b class="fr frBlock hide">👤 Par client</b>
+                  <span class="fr frBlock hide">TOP clients + contribution + total vente & bénéfice.</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="feat">
+              <div class="featRow">
+                <div class="dot"></div>
+                <div>
+                  <b class="arBlock">🏷️ عائلات/علامات</b>
+                  <span class="arBlock">تحديد نقاط القوة: العائلة/الماركة الأكثر ربحًا.</span>
+
+                  <b class="fr frBlock hide">🏷️ Familles / Marques</b>
+                  <span class="fr frBlock hide">Identifier les segments les plus rentables.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- CALLOUTS -->
+    <div class="callouts">
+      <div class="callout">
+        <b class="arBlock">✅ رقم واضح = قرار سريع</b>
+        <p class="arBlock">
+          إجماليات لحظية (مصاريف، كاش، فوائد) مع تقارير منظمة تساعدك تعرف
+          أين يروح المال وأين تربح أكثر.
+        </p>
+
+        <b class="fr frBlock hide">✅ Chiffres clairs = décisions rapides</b>
+        <p class="fr frBlock hide">
+          Totaux instantanés (frais, caisse, bénéfice) et rapports structurés
+          pour savoir où va l’argent et où vous gagnez le plus.
+        </p>
+      </div>
+
+      <div class="callout">
+        <b class="arBlock">⚡ تقارير جاهزة للطباعة</b>
+        <p class="arBlock">
+          تصدير/طباعة تقارير حسب الفترة مع فلاتر ذكية
+          لتقديمها للمحاسب أو للإدارة بسهولة.
+        </p>
+
+        <b class="fr frBlock hide">⚡ Rapports prêts à imprimer</b>
+        <p class="fr frBlock hide">
+          Export / impression par période avec filtres intelligents
+          pour la comptabilité ou la direction.
+        </p>
+      </div>
+    </div>
+
+    <!-- SECTION: Frais -->
+    <div class="section">
+      <div class="sectionHead">
+        <div>
+          <h2 class="arBlock">💸 تسيير المصاريف (Frais commerciaux)</h2>
+          <p class="arBlock">تسجيل • حذف • فلاتر حسب النوع والفترة • إجماليات</p>
+
+          <h2 class="fr frBlock hide">💸 Gestion des frais commerciaux</h2>
+          <p class="fr frBlock hide">Saisie • suppression • filtres par type/période • totaux</p>
+        </div>
+        <span class="chip">CTRL+F • Relevés</span>
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <div class="img">
+            <img src="frais.png" alt="Frais commerciaux" class="zoomable">
+            <div class="cap arBlock">واجهة المصاريف + كشف شامل</div>
+            <div class="cap fr frBlock hide">Frais + relevés globaux</div>
+          </div>
+          <div class="body">
+            <h3 class="arBlock">تسجيل المصاريف اليومية بسهولة</h3>
+            <p class="arBlock">تاريخ/ساعة، نوع المصروف، المبلغ، ملاحظة… مع إجمالي المصاريف في الأسفل.</p>
+
+            <h3 class="fr frBlock hide">Saisie des frais</h3>
+            <p class="fr frBlock hide">Date/heure, type, montant, remarque… avec total automatique en bas.</p>
+
+            <div class="tags">
+              <span class="tag">Validation</span><span class="tag">Filtres</span><span class="tag">Relevé</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="img">
+            <img src="caisse.png" alt="Caisse" class="zoomable">
+            <div class="cap arBlock">إدارة الصندوق + الزكاة</div>
+            <div class="cap fr frBlock hide">Gestion de la caisse</div>
+          </div>
+          <div class="body">
+            <h3 class="arBlock">مراقبة الكاش الداخل والخارج</h3>
+            <p class="arBlock">ملخص واضح: مبيعات نقدًا، تسديدات، مصاريف… وحساب رأس المال للزكاة.</p>
+
+            <h3 class="fr frBlock hide">Suivi caisse</h3>
+            <p class="fr frBlock hide">Résumé: ventes espèce, versements, frais… et calcul du capital (zakat).</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="img">
+            <img src="opportunite_perdu.png" alt="Opportunités perdues" class="zoomable">
+            <div class="cap arBlock">فرص البيع الضائعة</div>
+            <div class="cap fr frBlock hide">Opportunités perdues</div>
+          </div>
+          <div class="body">
+            <h3 class="arBlock">تنبيه ذكي لزيادة الربح</h3>
+            <p class="arBlock">منتجات طلبها عالي ومخزونها ضعيف… لتفادي خسارة المبيعات.</p>
+
+            <h3 class="fr frBlock hide">Alerte rentable</h3>
+            <p class="fr frBlock hide">Produits à forte demande & stock critique pour éviter les ventes perdues.</p>
+
+            <div class="tags">
+              <span class="tag">12 mois</span><span class="tag">Stock</span><span class="tag">Analyse</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION: Bénéfice -->
+    <div class="section">
+      <div class="sectionHead">
+        <div>
+          <h2 class="arBlock">📈 تسيير الفائدة (Bénéfice)</h2>
+          <p class="arBlock">حسب الشهر/السنة • حسب السلعة • حسب الزبون</p>
+
+          <h2 class="fr frBlock hide">📈 Gestion du bénéfice</h2>
+          <p class="fr frBlock hide">Mensuel/annuel • par article • par client</p>
+        </div>
+        <span class="chip">Bénéfice • Marge • Taux</span>
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <div class="img">
+            <img src="benefice_annuel_par_mois.png" alt="Bénéfice mensuel/annuel" class="zoomable">
+            <div class="cap arBlock">فوائد شهرية / سنوية</div>
+            <div class="cap fr frBlock hide">Bénéfice mensuel / annuel</div>
+          </div>
+          <div class="body">
+            <h3 class="arBlock">رؤية عامة للمردودية</h3>
+            <p class="arBlock">جدول شهري يبين: المبيعات، الشراء، الربح، ونسبة الربح.</p>
+
+            <h3 class="fr frBlock hide">Vue globale</h3>
+            <p class="fr frBlock hide">Table mensuelle: vente, achat, bénéfice et taux.</p>
+
+            <div class="tags">
+              <span class="tag">Année</span><span class="tag">Mois</span><span class="tag">Taux</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="img">
+            <img src="benefice_par_article.png" alt="Bénéfice par article" class="zoomable">
+            <div class="cap arBlock">الربح حسب السلعة</div>
+            <div class="cap fr frBlock hide">Bénéfice par article</div>
+          </div>
+          <div class="body">
+            <h3 class="arBlock">تحليل دقيق حسب المنتج</h3>
+            <p class="arBlock">إجمالي البيع والربح لكل سلعة مع فلاتر (زبون/مستخدم/فترة).</p>
+
+            <h3 class="fr frBlock hide">Analyse par produit</h3>
+            <p class="fr frBlock hide">Total vente & bénéfice par article avec filtres (client/user/période).</p>
+
+            <div class="tags">
+              <span class="tag">Filtres</span><span class="tag">Ref/CB</span><span class="tag">User</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="img">
+            <img src="benefice_par_client.png" alt="Bénéfice par client" class="zoomable">
+            <div class="cap arBlock">الربح حسب الزبون</div>
+            <div class="cap fr frBlock hide">Bénéfice par client</div>
+          </div>
+          <div class="body">
+            <h3 class="arBlock">من هم الزبائن الأكثر ربحًا؟</h3>
+            <p class="arBlock">كشف TOP + نسب المساهمة + إجمالي الشراء/البيع/الربح.</p>
+
+            <h3 class="fr frBlock hide">Clients les plus rentables</h3>
+            <p class="fr frBlock hide">TOP + contribution + total achat/vente/bénéfice.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION: Statistiques -->
+    <div class="section">
+      <div class="sectionHead">
+        <div>
+          <h2 class="arBlock">📊 الإحصاءات (Statistiques avancées)</h2>
+          <p class="arBlock">عائلات/علامات • مواد راكدة • مراقبة الأداء</p>
+
+          <h2 class="fr frBlock hide">📊 Statistiques avancées</h2>
+          <p class="fr frBlock hide">Familles/Marques • Dormants • Pilotage</p>
+        </div>
+        <span class="chip">Insights • Décision</span>
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <div class="img">
+            <img src="benefice_par_famille_marque.png" alt="Bénéfice familles / marques" class="zoomable">
+            <div class="cap arBlock">فوائد حسب العائلات/العلامات</div>
+            <div class="cap fr frBlock hide">Bénéfice familles / marques</div>
+          </div>
+          <div class="body">
+            <h3 class="arBlock">اكتشف أقوى فئات الربح</h3>
+            <p class="arBlock">مقارنة دقيقة بين العائلات/الماركات لمعرفة أين تركز مشترياتك.</p>
+
+            <h3 class="fr frBlock hide">Segments rentables</h3>
+            <p class="fr frBlock hide">Comparer familles/marques pour mieux orienter vos achats.</p>
+
+            <div class="tags">
+              <span class="tag">Famille</span><span class="tag">Marque</span><span class="tag">Taux</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="img">
+            <img src="dormant.png" alt="Articles dormants" class="zoomable">
+            <div class="cap arBlock">المواد الراكدة</div>
+            <div class="cap fr frBlock hide">Articles dormants</div>
+          </div>
+          <div class="body">
+            <h3 class="arBlock">تنظيف المخزون بذكاء</h3>
+            <p class="arBlock">قائمة المنتجات التي لم تُبع خلال مدة محددة لتفادي تجميد رأس المال.</p>
+
+            <h3 class="fr frBlock hide">Stock qui ne bouge pas</h3>
+            <p class="fr frBlock hide">Liste des produits non vendus sur une période pour libérer du capital.</p>
+
+            <div class="tags">
+              <span class="tag">Période</span><span class="tag">Rotation</span><span class="tag">Décision</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="img">
+            <img src="alteration.png" alt="Altération articles" class="zoomable">
+            <div class="cap arBlock">إتلاف/تعديل السلع</div>
+            <div class="cap fr frBlock hide">Altération d’articles</div>
+          </div>
+          <div class="body">
+            <h3 class="arBlock">توثيق أي تغيير في المخزون</h3>
+            <p class="arBlock">إضافة مواد للإتلاف/التعديل مع إجمالي واضح: عدد السلع والكمية والمجموع.</p>
+
+            <h3 class="fr frBlock hide">Traçabilité</h3>
+            <p class="fr frBlock hide">Saisie d’altérations avec totaux (articles, quantité, total).</p>
+
+            <div class="tags">
+              <span class="tag">Contrôle</span><span class="tag">Historique</span><span class="tag">Sécurité</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FOOT -->
+    <div class="foot">
+      <div class="arBlock">
+        🌐 <a href="https://www.bmsoftdev.com/" target="_blank" rel="noopener">www.bmsoftdev.com</a>
+        • ProBMS — المصاريف • الفائدة • الإحصاءات — 06.62.54.14.86 / 07.76.07.77.94
+      </div>
+      <div class="fr frBlock hide">
+        🌐 <a href="https://www.bmsoftdev.com/" target="_blank" rel="noopener">www.bmsoftdev.com</a>
+        • ProBMS — Frais • Bénéfice • Statistiques — 06.62.54.14.86 / 07.76.07.77.94
+      </div>
+    </div>
+
+  </div>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox">
+    <span class="close" id="lbClose">✕</span>
+    <img id="lbImg" src="" alt="Zoom">
+  </div>
+
+  <script>
+    // ===== Language Switch =====
+    const arBlocks = document.querySelectorAll('.arBlock');
+    const frBlocks = document.querySelectorAll('.frBlock');
+    const btnAr = document.getElementById('btnAr');
+    const btnFr = document.getElementById('btnFr');
+
+    function setActive(ar){
+      if(ar){
+        btnAr.classList.add('active'); btnFr.classList.remove('active');
+      }else{
+        btnFr.classList.add('active'); btnAr.classList.remove('active');
+      }
+    }
+
+    function showAR(){
+      arBlocks.forEach(x => x.classList.remove('hide'));
+      frBlocks.forEach(x => x.classList.add('hide'));
+      document.documentElement.lang = 'ar';
+      document.documentElement.dir = 'rtl';
+      setActive(true);
+    }
+    function showFR(){
+      arBlocks.forEach(x => x.classList.add('hide'));
+      frBlocks.forEach(x => x.classList.remove('hide'));
+      document.documentElement.lang = 'fr';
+      document.documentElement.dir = 'ltr';
+      setActive(false);
+    }
+    btnAr.addEventListener('click', showAR);
+    btnFr.addEventListener('click', showFR);
+
+    // default Arabic
+    showAR();
+
+    // ===== IMAGE LIGHTBOX (Zoom) =====
+    const lightbox = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lbImg');
+    const lbClose = document.getElementById('lbClose');
+
+    function openLightbox(src){
+      lbImg.src = src;
+      lightbox.classList.add('active');
+    }
+    function closeLightbox(){
+      lightbox.classList.remove('active');
+      lbImg.src = '';
+    }
+
+    document.querySelectorAll('img.zoomable').forEach(img=>{
+      img.addEventListener('click', ()=>{
+        if(!img.getAttribute('src')) return;
+        openLightbox(img.getAttribute('src'));
+      });
+    });
+
+    lbClose.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', (e)=>{ if(e.target === lightbox) closeLightbox(); });
+    document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeLightbox(); });
+  </script>
+</body>
+</html>
